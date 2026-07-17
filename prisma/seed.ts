@@ -408,7 +408,10 @@ async function seedBulkSampleData() {
 
       const release = await prisma.pressRelease.upsert({
         where: { slug },
-        update: {},
+        update: {
+          thumbnailUrl: `/samples/${sc.slug}-${ri + 1}.png`,
+          thumbnailCaption: `${sc.nameZh}新聞稿主視覺圖`,
+        },
         create: {
           companyId: company.id,
           slug,
@@ -416,6 +419,9 @@ async function seedBulkSampleData() {
           titleZh: rel.titleZh,
           subtitleZh: rel.subtitleZh,
           bodyZh: bulkBody(sc.nameZh, rel.heading, rel.subtitleZh),
+          // サンプル用キャンペーン画像（scripts/gen-sample-thumbnails.mjs で生成）
+          thumbnailUrl: `/samples/${sc.slug}-${ri + 1}.png`,
+          thumbnailCaption: `${sc.nameZh}新聞稿主視覺圖`,
           // 半数は英語版も用意（hreflang 動作確認用）
           ...(releaseIndex % 2 === 0
             ? {
@@ -573,7 +579,10 @@ async function seedSampleData() {
     const publishedAt = new Date(Date.now() - s.daysAgo * 24 * 60 * 60 * 1000);
     const release = await prisma.pressRelease.upsert({
       where: { slug: s.slug },
-      update: {},
+      update: {
+        thumbnailUrl: `/samples/${s.slug}.png`,
+        thumbnailCaption: "示範科技新聞稿主視覺圖",
+      },
       create: {
         companyId: company.id,
         slug: s.slug,
@@ -584,6 +593,8 @@ async function seedSampleData() {
         titleEn: s.titleEn,
         subtitleEn: s.subtitleEn,
         bodyEn: s.bodyEn ?? undefined,
+        thumbnailUrl: `/samples/${s.slug}.png`,
+        thumbnailCaption: "示範科技新聞稿主視覺圖",
         publishedAt,
       },
     });
