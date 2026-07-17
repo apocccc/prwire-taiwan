@@ -42,7 +42,6 @@ export default async function HomePage({
     ? (rank as RankPeriod)
     : "all";
 
-  const t = await getTranslations("common");
   const tHome = await getTranslations("home");
   const tNews = await getTranslations("news");
 
@@ -75,14 +74,33 @@ export default async function HomePage({
     <div className="bg-white">
       <JsonLd data={websiteJsonLd(l)} />
 
-      {/* ヒーロー見出し */}
-      <div className="border-b border-gray-200 bg-gradient-to-r from-[#d51f1a] to-[#b3160f]">
-        <div className="mx-auto max-w-6xl px-4 py-6">
-          <h1 className="text-2xl font-bold text-white sm:text-3xl">
-            {t("siteTagline")}
+      {/* ヒーロー（台北スカイライン背景・コンパクト） */}
+      <section className="relative overflow-hidden border-b border-gray-200 bg-gradient-to-b from-white to-[#eef4fb]">
+        <Image
+          src="/hero-skyline.png"
+          alt=""
+          aria-hidden
+          width={2200}
+          height={620}
+          priority
+          className="pointer-events-none absolute bottom-0 right-0 h-full w-full object-cover object-bottom opacity-95"
+        />
+        <div className="relative mx-auto max-w-6xl px-4 py-8 sm:py-10">
+          <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+            {tHome("heroTitle")}
           </h1>
+          <p className="mt-3 max-w-xl text-sm text-gray-600 sm:text-base">
+            {tHome("heroSubtitle")}
+          </p>
+          <Link
+            href="/register/publisher"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#e5301f] to-[#a5120f] px-7 py-3 text-sm font-semibold text-white shadow-md transition hover:brightness-110 sm:text-base"
+          >
+            {tHome("heroCta")}
+            <span aria-hidden="true">›</span>
+          </Link>
         </div>
-      </div>
+      </section>
 
       {/* ランキング（PVベース） */}
       <section className="bg-gray-50">
