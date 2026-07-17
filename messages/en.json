@@ -7,8 +7,14 @@
     "email": "Email",
     "password": "Password",
     "submit": "Submit",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "cancel": "Cancel",
     "loading": "Processing…",
-    "requiredField": "This field is required"
+    "requiredField": "This field is required",
+    "search": "Search",
+    "backToList": "Back to list"
   },
   "nav": {
     "home": "Home",
@@ -18,7 +24,8 @@
     "mediaList": "Media Partners",
     "dashboard": "Publisher Dashboard",
     "adminPanel": "Admin",
-    "mediaRoom": "Media Room"
+    "mediaRoom": "Media Room",
+    "terms": "Terms of Service"
   },
   "auth": {
     "loginTitle": "Log in",
@@ -43,28 +50,163 @@
     "consentMediaListing": "I agree that the outlet name, URL, and coverage area will be listed on the public media directory (individual contact details remain private).",
     "consentDirectSend": "I agree that, when the direct-delivery feature launches, companies may deliver press release information directly to designated media.",
     "consentTerms": "I have read and agree to the Terms of Service.",
+    "viewTerms": "Read the Terms of Service",
     "registerSuccessPublisher": "Registration complete. Please log in to start publishing.",
     "registerSuccessMedia": "Your application has been submitted. You can log in to the Media Room once an administrator approves your account.",
     "emailTaken": "This email is already registered",
     "slugTaken": "This slug is already taken",
     "registerFailed": "Registration failed. Please try again later."
   },
+  "home": {
+    "latestNews": "Latest Press Releases",
+    "browseCategories": "Browse by Category",
+    "comingSoon": "Press release content coming soon",
+    "viewAll": "View all"
+  },
+  "news": {
+    "listTitle": "Latest Press Releases",
+    "empty": "No press releases yet",
+    "pageN": "Page {page}"
+  },
+  "article": {
+    "publishedAt": "Published",
+    "categoriesLabel": "Categories",
+    "companyProfile": "About the Company",
+    "moreFromCompany": "More from this company",
+    "notFound": "Press release not found"
+  },
+  "category": {
+    "indexTitle": "Categories",
+    "listTitle": "Press Releases in {name}"
+  },
+  "company": {
+    "listTitle": "Press Releases by {name}",
+    "website": "Official Website"
+  },
+  "mediaListPage": {
+    "title": "Registered Media",
+    "description": "Media outlets and journalists registered on this platform. Individual contact details are not published.",
+    "outletName": "Outlet",
+    "outletUrl": "URL",
+    "coverageArea": "Coverage",
+    "empty": "No registered media yet",
+    "joinCta": "Are you a journalist? Sign up to access media-only information and media kits."
+  },
+  "searchPage": {
+    "title": "Search",
+    "placeholder": "Enter keywords",
+    "resultsFor": "Results for \"{q}\"",
+    "noResults": "No matching press releases"
+  },
   "dashboard": {
     "title": "Publisher Dashboard",
     "welcome": "Welcome back",
-    "placeholder": "Press release management will be available in an upcoming version."
+    "newRelease": "New Press Release",
+    "myReleases": "My Press Releases",
+    "statusLabel": "Status",
+    "views": "Views",
+    "updatedAt": "Updated",
+    "actions": "Actions",
+    "duplicate": "Duplicate",
+    "unpublish": "Unpublish",
+    "preview": "Preview",
+    "empty": "No press releases yet",
+    "status": {
+      "DRAFT": "Draft",
+      "IN_REVIEW": "In Review",
+      "SCHEDULED": "Scheduled",
+      "PUBLISHED": "Published",
+      "UNPUBLISHED": "Unpublished"
+    },
+    "reviewNote": "Rejection reason"
   },
-  "admin": {
+  "editor": {
+    "newTitle": "New Press Release",
+    "editTitle": "Edit Press Release",
+    "langZh": "Traditional Chinese",
+    "langEn": "English",
+    "title": "Title",
+    "subtitle": "Subtitle",
+    "body": "Body",
+    "thumbnail": "Thumbnail",
+    "thumbnailCaption": "Thumbnail caption (required; used as alt text and figcaption)",
+    "uploadImage": "Upload image",
+    "imageCaption": "Image caption (required)",
+    "captionRequired": "Every image must have a caption",
+    "maxImages": "Up to 10 images in the body",
+    "metaDescription": "Meta description (auto-generated from the body if left blank)",
+    "slugLabel": "URL slug (optional, alphanumeric)",
+    "saveDraft": "Save draft",
+    "saved": "Saved",
+    "settingsStep": "Distribution Settings",
+    "categories": "Categories (multiple allowed)",
+    "mediaOnlyInfo": "Media-only information (visible to registered media only)",
+    "mediaKit": "Media kit (zip / pdf / images; downloadable by registered media only)",
+    "uploadFile": "Upload file",
+    "submitForReview": "Submit for publication",
+    "submitConfirm": "Submit this release for review?",
+    "scheduledAt": "Scheduled publish time (leave blank to publish immediately)",
+    "submitted": "Submitted for review",
+    "publishedNow": "Published",
+    "validationError": "Please fix the following before submitting",
+    "errNoLanguage": "At least one language version must be complete (title, subtitle, body)",
+    "errThumbnail": "Upload a thumbnail and enter its caption",
+    "errImageCaptions": "Some body images are missing captions",
+    "errTooManyImages": "More than 10 images in the body",
+    "backToDashboard": "Back to dashboard"
+  },
+  "adminPanel": {
     "title": "Admin Panel",
-    "placeholder": "Review queue, user management, and category management will be available in an upcoming version."
+    "reviewQueue": "Review Queue",
+    "releases": "Releases",
+    "users": "Users",
+    "categoriesAdmin": "Categories",
+    "settings": "Site Settings",
+    "analytics": "Analytics",
+    "approve": "Approve",
+    "reject": "Reject",
+    "rejectReason": "Rejection reason",
+    "noPending": "No releases waiting for review",
+    "submittedBy": "Submitted by",
+    "approveSuccess": "Approved",
+    "rejectSuccess": "Rejected",
+    "userEmail": "Email",
+    "userRole": "Role",
+    "userStatus": "Status",
+    "approveUser": "Approve",
+    "suspendUser": "Suspend",
+    "activateUser": "Reactivate",
+    "roleLabels": { "PUBLISHER": "Publisher", "MEDIA": "Media", "ADMIN": "Admin" },
+    "statusLabels": { "PENDING": "Pending", "ACTIVE": "Active", "SUSPENDED": "Suspended" },
+    "categoryName_zh": "Name (zh-Hant)",
+    "categoryName_en": "Name (English)",
+    "categorySlug": "Slug",
+    "addCategory": "Add category",
+    "reviewRequired": "Require admin review before publishing",
+    "serviceNameOverride": "Service name (overrides config)",
+    "footerText": "Footer text",
+    "viewsByRelease": "Views by release",
+    "unpublishRelease": "Unpublish",
+    "publishRelease": "Republish",
+    "deleteRelease": "Delete",
+    "deleteConfirm": "Delete permanently? This cannot be undone."
   },
   "mediaRoom": {
     "title": "Media Room",
-    "placeholder": "Media-only information and media kit downloads will be available in an upcoming version."
+    "latestReleases": "Latest Press Releases",
+    "mediaOnlyInfo": "Media-only Information",
+    "mediaKit": "Media Kit",
+    "download": "Download",
+    "noInfo": "No media-only information for this release",
+    "followCategories": "Follow Categories",
+    "followDesc": "Follow categories to receive new releases in a weekly digest email.",
+    "following": "Following",
+    "follow": "Follow",
+    "viewPublic": "View public page"
   },
-  "home": {
-    "latestNews": "Latest Press Releases",
-    "comingSoon": "Press release content coming soon"
+  "terms": {
+    "title": "Terms of Service",
+    "updated": "Last updated"
   },
   "footer": {
     "operatedBy": "Operated by ",

@@ -7,8 +7,14 @@
     "email": "電子郵件",
     "password": "密碼",
     "submit": "送出",
+    "save": "儲存",
+    "delete": "刪除",
+    "edit": "編輯",
+    "cancel": "取消",
     "loading": "處理中…",
-    "requiredField": "此欄位為必填"
+    "requiredField": "此欄位為必填",
+    "search": "搜尋",
+    "backToList": "返回列表"
   },
   "nav": {
     "home": "首頁",
@@ -18,7 +24,8 @@
     "mediaList": "合作媒體",
     "dashboard": "發布後台",
     "adminPanel": "管理後台",
-    "mediaRoom": "媒體專區"
+    "mediaRoom": "媒體專區",
+    "terms": "服務條款"
   },
   "auth": {
     "loginTitle": "登入",
@@ -43,28 +50,163 @@
     "consentMediaListing": "我同意媒體名稱、媒體網址、報導領域將於公開媒體列表頁刊登（個別聯絡方式不公開）。",
     "consentDirectSend": "我同意未來平台提供「直接送達」功能時，企業得將新聞稿資訊直接送達至指定媒體。",
     "consentTerms": "我已閱讀並同意服務條款。",
+    "viewTerms": "閱讀服務條款",
     "registerSuccessPublisher": "註冊完成，請登入開始發布新聞稿。",
     "registerSuccessMedia": "註冊申請已送出。待管理員審核通過後，您將可以登入媒體專區。",
     "emailTaken": "此電子郵件已被註冊",
     "slugTaken": "此網址代稱已被使用",
     "registerFailed": "註冊失敗，請稍後再試"
   },
+  "home": {
+    "latestNews": "最新新聞稿",
+    "browseCategories": "依分類瀏覽",
+    "comingSoon": "新聞稿內容即將上線",
+    "viewAll": "查看全部"
+  },
+  "news": {
+    "listTitle": "最新新聞稿",
+    "empty": "目前沒有新聞稿",
+    "pageN": "第 {page} 頁"
+  },
+  "article": {
+    "publishedAt": "發布日期",
+    "categoriesLabel": "分類",
+    "companyProfile": "企業資訊",
+    "moreFromCompany": "此企業的其他新聞稿",
+    "notFound": "找不到此新聞稿"
+  },
+  "category": {
+    "indexTitle": "分類一覽",
+    "listTitle": "{name} 的新聞稿"
+  },
+  "company": {
+    "listTitle": "{name} 的新聞稿",
+    "website": "官方網站"
+  },
+  "mediaListPage": {
+    "title": "合作媒體一覽",
+    "description": "已註冊本平台的媒體與記者。個別聯絡方式不公開。",
+    "outletName": "媒體名稱",
+    "outletUrl": "媒體網址",
+    "coverageArea": "報導領域",
+    "empty": "目前沒有已註冊的媒體",
+    "joinCta": "您是記者或媒體嗎？註冊後即可取得媒體限定資訊與媒體資料袋。"
+  },
+  "searchPage": {
+    "title": "搜尋",
+    "placeholder": "輸入關鍵字",
+    "resultsFor": "「{q}」的搜尋結果",
+    "noResults": "沒有符合的新聞稿"
+  },
   "dashboard": {
     "title": "發布後台",
     "welcome": "歡迎回來",
-    "placeholder": "新聞稿管理功能將於後續版本開放。"
+    "newRelease": "建立新聞稿",
+    "myReleases": "我的新聞稿",
+    "statusLabel": "狀態",
+    "views": "瀏覽數",
+    "updatedAt": "更新日期",
+    "actions": "操作",
+    "duplicate": "複製",
+    "unpublish": "下架",
+    "preview": "預覽",
+    "empty": "尚未建立新聞稿",
+    "status": {
+      "DRAFT": "草稿",
+      "IN_REVIEW": "審核中",
+      "SCHEDULED": "排程發布",
+      "PUBLISHED": "已發布",
+      "UNPUBLISHED": "已下架"
+    },
+    "reviewNote": "退回原因"
   },
-  "admin": {
+  "editor": {
+    "newTitle": "建立新聞稿",
+    "editTitle": "編輯新聞稿",
+    "langZh": "繁體中文版",
+    "langEn": "英文版",
+    "title": "標題",
+    "subtitle": "副標題",
+    "body": "內文",
+    "thumbnail": "首圖（縮圖）",
+    "thumbnailCaption": "首圖說明（必填，將作為 alt 與圖說）",
+    "uploadImage": "上傳圖片",
+    "imageCaption": "圖片說明（必填）",
+    "captionRequired": "所有圖片皆須填寫圖片說明",
+    "maxImages": "內文圖片最多 10 張",
+    "metaDescription": "Meta 描述（留空將自動從內文產生）",
+    "slugLabel": "網址代稱（選填，英數字）",
+    "saveDraft": "儲存草稿",
+    "saved": "已儲存",
+    "settingsStep": "發布設定",
+    "categories": "分類（可複選）",
+    "mediaOnlyInfo": "媒體限定資訊（僅註冊媒體可見）",
+    "mediaKit": "媒體資料袋（zip / pdf / 圖片，僅註冊媒體可下載）",
+    "uploadFile": "上傳檔案",
+    "submitForReview": "申請發布",
+    "submitConfirm": "送出後將進入審核流程，確定要申請發布嗎？",
+    "scheduledAt": "預約發布時間（留空為立即發布）",
+    "submitted": "已送出審核",
+    "publishedNow": "已發布",
+    "validationError": "請修正以下問題再送出",
+    "errNoLanguage": "至少需完整填寫一個語言版本（標題・副標題・內文）",
+    "errThumbnail": "請上傳首圖並填寫首圖說明",
+    "errImageCaptions": "內文中有未填寫說明的圖片",
+    "errTooManyImages": "內文圖片超過 10 張",
+    "backToDashboard": "返回發布後台"
+  },
+  "adminPanel": {
     "title": "管理後台",
-    "placeholder": "審核佇列、使用者管理、分類管理將於後續版本開放。"
+    "reviewQueue": "審核佇列",
+    "releases": "新聞稿管理",
+    "users": "使用者管理",
+    "categoriesAdmin": "分類管理",
+    "settings": "網站設定",
+    "analytics": "數據分析",
+    "approve": "核准發布",
+    "reject": "退回",
+    "rejectReason": "退回原因",
+    "noPending": "目前沒有待審核的新聞稿",
+    "submittedBy": "申請者",
+    "approveSuccess": "已核准",
+    "rejectSuccess": "已退回",
+    "userEmail": "電子郵件",
+    "userRole": "角色",
+    "userStatus": "狀態",
+    "approveUser": "核准",
+    "suspendUser": "停權",
+    "activateUser": "恢復",
+    "roleLabels": { "PUBLISHER": "企業", "MEDIA": "媒體", "ADMIN": "管理員" },
+    "statusLabels": { "PENDING": "待審核", "ACTIVE": "使用中", "SUSPENDED": "已停權" },
+    "categoryName_zh": "名稱（繁中）",
+    "categoryName_en": "名稱（英文）",
+    "categorySlug": "Slug",
+    "addCategory": "新增分類",
+    "reviewRequired": "發布前需管理員審核",
+    "serviceNameOverride": "服務名稱（覆寫設定檔）",
+    "footerText": "頁尾文字",
+    "viewsByRelease": "各新聞稿瀏覽數",
+    "unpublishRelease": "下架",
+    "publishRelease": "重新發布",
+    "deleteRelease": "刪除",
+    "deleteConfirm": "確定要刪除嗎？此操作無法復原。"
   },
   "mediaRoom": {
     "title": "媒體專區",
-    "placeholder": "媒體限定資訊與媒體資料袋下載將於後續版本開放。"
+    "latestReleases": "最新新聞稿",
+    "mediaOnlyInfo": "媒體限定資訊",
+    "mediaKit": "媒體資料袋",
+    "download": "下載",
+    "noInfo": "此新聞稿沒有媒體限定資訊",
+    "followCategories": "追蹤分類",
+    "followDesc": "追蹤有興趣的分類，即可在每週摘要信中收到新發布的新聞稿。",
+    "following": "追蹤中",
+    "follow": "追蹤",
+    "viewPublic": "檢視公開頁面"
   },
-  "home": {
-    "latestNews": "最新新聞稿",
-    "comingSoon": "新聞稿內容即將上線"
+  "terms": {
+    "title": "服務條款",
+    "updated": "最後更新日期"
   },
   "footer": {
     "operatedBy": "營運：",
