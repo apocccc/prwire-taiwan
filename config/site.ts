@@ -11,8 +11,8 @@ export const siteConfig = {
 
   /** サービス表示名（ロケール別） */
   name: {
-    zh: "twpr 新聞稿發布平台",
-    en: "twpr Press Release Wire",
+    zh: "TAIWAN PUBLIC WIRE 新聞稿發布平台",
+    en: "TAIWAN PUBLIC WIRE",
   },
 
   /** サービスの説明（メタ description のデフォルト） */
