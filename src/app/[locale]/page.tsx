@@ -74,16 +74,13 @@ export default async function HomePage({
     <div className="bg-white">
       <JsonLd data={websiteJsonLd(l)} />
 
-      {/* ヒーロー（台北スカイライン背景・コンパクト） */}
+      {/* ヒーロー（台北スカイライン背景・コンパクト）
+          背景は public/hero-skyline.webp を差し替えるだけで変更可能 */}
       <section className="relative overflow-hidden border-b border-gray-200 bg-gradient-to-b from-white to-[#eef4fb]">
-        <Image
-          src="/hero-skyline.png"
-          alt=""
-          aria-hidden
-          width={2200}
-          height={620}
-          priority
-          className="pointer-events-none absolute bottom-0 right-0 h-full w-full object-cover object-bottom opacity-95"
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat opacity-95"
+          style={{ backgroundImage: "url('/hero-skyline.webp')" }}
         />
         <div className="relative mx-auto max-w-6xl px-4 py-8 sm:py-10">
           <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl">
