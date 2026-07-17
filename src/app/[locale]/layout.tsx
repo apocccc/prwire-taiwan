@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
+import { getSiteSettings } from "@/lib/site-settings";
 import { siteConfig, type Locale } from "../../../config/site";
 import "../globals.css";
 
@@ -44,6 +45,7 @@ export default async function LocaleLayout({
   const t = await getTranslations("nav");
   const tFooter = await getTranslations("footer");
   const l = locale as Locale;
+  const settings = await getSiteSettings();
 
   return (
     <html lang={siteConfig.htmlLang[locale]}>
@@ -52,7 +54,7 @@ export default async function LocaleLayout({
           <header className="border-b border-gray-200">
             <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between gap-4">
               <Link href="/" className="font-bold text-lg shrink-0">
-                {siteConfig.name[l]}
+                {settings.name[l]}
               </Link>
               <nav aria-label="Global" className="flex items-center gap-4">
                 <ul className="hidden sm:flex items-center gap-4 text-sm">
@@ -98,12 +100,13 @@ export default async function LocaleLayout({
                   </li>
                 </ul>
               </nav>
+              {settings.footerText[l] && <p className="mt-4">{settings.footerText[l]}</p>}
               <p className="mt-4">
                 {tFooter("operatedBy")}
                 {siteConfig.operator.companyName}（{siteConfig.operator.serviceBrand}）
               </p>
               <p className="mt-1">
-                © {new Date().getFullYear()} {siteConfig.name[l]}
+                © {new Date().getFullYear()} {settings.name[l]}
               </p>
             </div>
           </footer>
