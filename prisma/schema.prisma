@@ -1,0 +1,211 @@
+// 台湾ローカル向けプレスリリース配信メディア データモデル
+// DB: PostgreSQL (Supabase / Neon を想定)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------- ユーザー・ロール ----------
+
+enum Role {
+  PUBLISHER // 事業者
+  MEDIA     // メディア（記者・媒体）
+  ADMIN     // 管理者・編集者
+}
+
+enum UserStatus {
+  PENDING   // 承認待ち（メディアは管理者承認制）
+  ACTIVE
+  SUSPENDED
+}
+
+model User {
+  id              String      @id @default(cuid())
+  email           String      @unique
+  passwordHash    String
+  role            Role
+  status          UserStatus  @default(PENDING)
+  name            String?
+  // 利用規約（事例利用許諾・メディア一覧公開・ダイレクト送付）への同意日時
+  termsAcceptedAt DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  company     Company?
+  mediaOutlet MediaOutlet?
+}
+
+// ---------- 事業者 ----------
+
+model Company {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slug          String   @unique // /{locale}/company/[slug]
+  nameZh        String
+  nameEn        String?
+  logoUrl       String?
+  descriptionZh String?
+  descriptionEn String?
+  websiteUrl    String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  releases PressRelease[]
+}
+
+// ---------- メディア ----------
+
+model MediaOutlet {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  outletName   String // 媒体名（公開）
+  outletUrl    String // 媒体URL（公開）
+  contactName  String // 担当者名（非公開）
+  contactEmail String // 連絡先メール（非公開）
+  coverageArea String // カバー領域（公開）
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  categoryFollows CategoryFollow[]
+}
+
+// ---------- プレスリリース ----------
+
+enum ReleaseStatus {
+  DRAFT
+  IN_REVIEW
+  SCHEDULED
+  PUBLISHED
+  UNPUBLISHED
+}
+
+model PressRelease {
+  id        String        @id @default(cuid())
+  companyId String
+  company   Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  slug      String        @unique // /{locale}/news/[slug]
+  status    ReleaseStatus @default(DRAFT)
+
+  // 多言語フィールド（片方のみでも公開可）
+  titleZh    String?
+  subtitleZh String?
+  bodyZh     Json? // Tiptap JSON
+  titleEn    String?
+  subtitleEn String?
+  bodyEn     Json? // Tiptap JSON
+
+  // メタ description（リリース冒頭から自動生成・編集可）
+  metaDescriptionZh String?
+  metaDescriptionEn String?
+
+  // サムネイル（必須・キャプション必須はアプリ側バリデーションで担保）
+  thumbnailUrl     String?
+  thumbnailCaption String?
+
+  scheduledAt DateTime? // 公開予約日時
+  publishedAt DateTime?
+  viewCount   Int       @default(0)
+  reviewNote  String? // 差し戻し理由コメント
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  images        ReleaseImage[]
+  categories    ReleaseCategory[]
+  mediaOnlyInfo MediaOnlyInfo?
+  mediaKitFiles MediaKitFile[]
+
+  @@index([status, publishedAt(sort: Desc)])
+  @@index([companyId, status])
+}
+
+// 本文中画像（最大10枚はアプリ側で制約、キャプション必須）
+model ReleaseImage {
+  id        String       @id @default(cuid())
+  releaseId String
+  release   PressRelease @relation(fields: [releaseId], references: [id], onDelete: Cascade)
+  url       String
+  caption   String // alt属性と<figcaption>の両方に出力
+  width     Int?
+  height    Int?
+  sortOrder Int          @default(0)
+
+  @@index([releaseId])
+}
+
+// ---------- カテゴリ ----------
+
+model Category {
+  id        String @id @default(cuid())
+  slug      String @unique // /{locale}/category/[slug]
+  nameZh    String
+  nameEn    String
+  sortOrder Int    @default(0)
+
+  releases ReleaseCategory[]
+  follows  CategoryFollow[]
+}
+
+model ReleaseCategory {
+  releaseId  String
+  release    PressRelease @relation(fields: [releaseId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([releaseId, categoryId])
+}
+
+// メディアによるカテゴリフォロー（週次ダイジェスト用）
+model CategoryFollow {
+  mediaOutletId String
+  mediaOutlet   MediaOutlet @relation(fields: [mediaOutletId], references: [id], onDelete: Cascade)
+  categoryId    String
+  category      Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt     DateTime    @default(now())
+
+  @@id([mediaOutletId, categoryId])
+}
+
+// ---------- メディア限定コンテンツ ----------
+
+// メディア向け情報（登録メディアのみ閲覧可・APIレベルでロール検証）
+model MediaOnlyInfo {
+  releaseId String       @id
+  release   PressRelease @relation(fields: [releaseId], references: [id], onDelete: Cascade)
+  content   String
+  updatedAt DateTime     @updatedAt
+}
+
+// メディアキット（登録メディアのみDL可・署名付きURLで配信）
+model MediaKitFile {
+  id        String       @id @default(cuid())
+  releaseId String
+  release   PressRelease @relation(fields: [releaseId], references: [id], onDelete: Cascade)
+  fileKey   String // ストレージ上のキー（直リンク不可、署名付きURLを都度発行）
+  fileName  String
+  fileSize  Int // bytes
+  mimeType  String
+  createdAt DateTime     @default(now())
+
+  @@index([releaseId])
+}
+
+// ---------- サイト設定（管理画面から変更可能な項目） ----------
+
+model SiteSetting {
+  id             Int      @id @default(1)
+  reviewRequired Boolean  @default(true) // 審査フローON/OFF
+  serviceNameZh  String?
+  serviceNameEn  String?
+  logoUrl        String?
+  footerTextZh   String?
+  footerTextEn   String?
+  updatedAt      DateTime @updatedAt
+}

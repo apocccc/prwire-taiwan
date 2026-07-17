@@ -1,0 +1,73 @@
+{
+  "common": {
+    "siteTagline": "免費發布新聞稿，觸及台灣媒體與讀者",
+    "login": "登入",
+    "logout": "登出",
+    "register": "註冊",
+    "email": "電子郵件",
+    "password": "密碼",
+    "submit": "送出",
+    "loading": "處理中…",
+    "requiredField": "此欄位為必填"
+  },
+  "nav": {
+    "home": "首頁",
+    "news": "最新新聞稿",
+    "categories": "分類",
+    "companies": "企業",
+    "mediaList": "合作媒體",
+    "dashboard": "發布後台",
+    "adminPanel": "管理後台",
+    "mediaRoom": "媒體專區"
+  },
+  "auth": {
+    "loginTitle": "登入",
+    "loginFailed": "電子郵件或密碼錯誤，或帳號尚未通過審核",
+    "noAccount": "還沒有帳號？",
+    "registerPublisher": "註冊為企業（發布新聞稿）",
+    "registerMedia": "註冊為媒體（記者・媒體）",
+    "registerPublisherTitle": "企業帳號註冊",
+    "registerMediaTitle": "媒體帳號註冊",
+    "companyNameZh": "公司名稱（繁體中文）",
+    "companyNameEn": "公司名稱（英文，選填）",
+    "companySlug": "公司網址代稱（英數字與連字號）",
+    "websiteUrl": "公司網站",
+    "outletName": "媒體名稱",
+    "outletUrl": "媒體網址",
+    "contactName": "聯絡人姓名",
+    "contactEmail": "聯絡信箱（不公開）",
+    "coverageArea": "報導領域",
+    "contactPersonNote": "聯絡資訊僅供本平台與管理員使用，不會對外公開。",
+    "consentTitle": "服務條款同意事項",
+    "consentCaseStudy": "我同意 APOC Wire（株式會社APOC）得將本帳號作為「使用企業／使用媒體／使用記者」之實績案例使用。",
+    "consentMediaListing": "我同意媒體名稱、媒體網址、報導領域將於公開媒體列表頁刊登（個別聯絡方式不公開）。",
+    "consentDirectSend": "我同意未來平台提供「直接送達」功能時，企業得將新聞稿資訊直接送達至指定媒體。",
+    "consentTerms": "我已閱讀並同意服務條款。",
+    "registerSuccessPublisher": "註冊完成，請登入開始發布新聞稿。",
+    "registerSuccessMedia": "註冊申請已送出。待管理員審核通過後，您將可以登入媒體專區。",
+    "emailTaken": "此電子郵件已被註冊",
+    "slugTaken": "此網址代稱已被使用",
+    "registerFailed": "註冊失敗，請稍後再試"
+  },
+  "dashboard": {
+    "title": "發布後台",
+    "welcome": "歡迎回來",
+    "placeholder": "新聞稿管理功能將於後續版本開放。"
+  },
+  "admin": {
+    "title": "管理後台",
+    "placeholder": "審核佇列、使用者管理、分類管理將於後續版本開放。"
+  },
+  "mediaRoom": {
+    "title": "媒體專區",
+    "placeholder": "媒體限定資訊與媒體資料袋下載將於後續版本開放。"
+  },
+  "home": {
+    "latestNews": "最新新聞稿",
+    "comingSoon": "新聞稿內容即將上線"
+  },
+  "footer": {
+    "operatedBy": "營運：",
+    "terms": "服務條款"
+  }
+}

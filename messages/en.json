@@ -1,0 +1,73 @@
+{
+  "common": {
+    "siteTagline": "Distribute press releases in Taiwan for free",
+    "login": "Log in",
+    "logout": "Log out",
+    "register": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Submit",
+    "loading": "Processing…",
+    "requiredField": "This field is required"
+  },
+  "nav": {
+    "home": "Home",
+    "news": "Latest News",
+    "categories": "Categories",
+    "companies": "Companies",
+    "mediaList": "Media Partners",
+    "dashboard": "Publisher Dashboard",
+    "adminPanel": "Admin",
+    "mediaRoom": "Media Room"
+  },
+  "auth": {
+    "loginTitle": "Log in",
+    "loginFailed": "Invalid email or password, or your account is pending approval",
+    "noAccount": "Don't have an account?",
+    "registerPublisher": "Sign up as a company (publish releases)",
+    "registerMedia": "Sign up as media (journalist / outlet)",
+    "registerPublisherTitle": "Company Registration",
+    "registerMediaTitle": "Media Registration",
+    "companyNameZh": "Company name (Traditional Chinese)",
+    "companyNameEn": "Company name (English, optional)",
+    "companySlug": "Company URL slug (letters, numbers, hyphens)",
+    "websiteUrl": "Company website",
+    "outletName": "Outlet name",
+    "outletUrl": "Outlet URL",
+    "contactName": "Contact person",
+    "contactEmail": "Contact email (kept private)",
+    "coverageArea": "Coverage area",
+    "contactPersonNote": "Contact details are used only by the platform and administrators. They are never published.",
+    "consentTitle": "Terms of Service Consent",
+    "consentCaseStudy": "I agree that APOC Wire (APOC Inc.) may reference this account as a client / media / journalist case study.",
+    "consentMediaListing": "I agree that the outlet name, URL, and coverage area will be listed on the public media directory (individual contact details remain private).",
+    "consentDirectSend": "I agree that, when the direct-delivery feature launches, companies may deliver press release information directly to designated media.",
+    "consentTerms": "I have read and agree to the Terms of Service.",
+    "registerSuccessPublisher": "Registration complete. Please log in to start publishing.",
+    "registerSuccessMedia": "Your application has been submitted. You can log in to the Media Room once an administrator approves your account.",
+    "emailTaken": "This email is already registered",
+    "slugTaken": "This slug is already taken",
+    "registerFailed": "Registration failed. Please try again later."
+  },
+  "dashboard": {
+    "title": "Publisher Dashboard",
+    "welcome": "Welcome back",
+    "placeholder": "Press release management will be available in an upcoming version."
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "placeholder": "Review queue, user management, and category management will be available in an upcoming version."
+  },
+  "mediaRoom": {
+    "title": "Media Room",
+    "placeholder": "Media-only information and media kit downloads will be available in an upcoming version."
+  },
+  "home": {
+    "latestNews": "Latest Press Releases",
+    "comingSoon": "Press release content coming soon"
+  },
+  "footer": {
+    "operatedBy": "Operated by ",
+    "terms": "Terms of Service"
+  }
+}
