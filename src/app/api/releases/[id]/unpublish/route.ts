@@ -23,6 +23,6 @@ export async function POST(
     where: { id },
     data: { status: nextStatus, scheduledAt: null },
   });
-  revalidateReleasePaths(release.slug);
+  revalidateReleasePaths();
   return NextResponse.json({ ok: true, status: nextStatus });
 }

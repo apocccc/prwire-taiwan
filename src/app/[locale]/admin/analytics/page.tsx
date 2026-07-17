@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { requireRole } from "@/lib/require-role";
 import { formatTaipeiDate } from "@/lib/dates";
+import { articlePath } from "@/lib/article-url";
 import type { Locale } from "../../../../../config/site";
 
 export const dynamic = "force-dynamic";
@@ -26,12 +27,13 @@ export default async function AdminAnalyticsPage({
     where: { status: { in: ["PUBLISHED", "SCHEDULED", "UNPUBLISHED"] } },
     select: {
       id: true,
+      seq: true,
       slug: true,
       titleZh: true,
       titleEn: true,
       viewCount: true,
       publishedAt: true,
-      company: { select: { nameZh: true } },
+      company: { select: { seq: true, nameZh: true } },
     },
     orderBy: { viewCount: "desc" },
     take: 100,
@@ -60,7 +62,7 @@ export default async function AdminAnalyticsPage({
                 <td className="py-2 pr-4 text-gray-400">{i + 1}</td>
                 <td className="max-w-md py-2 pr-4">
                   <a
-                    href={`/${locale}/news/${r.slug}`}
+                    href={`/${locale}${articlePath(r)}`}
                     target="_blank"
                     className="line-clamp-1 text-blue-700 hover:underline"
                   >

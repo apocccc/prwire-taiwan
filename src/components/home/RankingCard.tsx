@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { formatTaipeiDate } from "@/lib/dates";
 import { pick } from "@/lib/l10n";
+import { articlePath } from "@/lib/article-url";
 import type { ReleaseListItem } from "@/lib/queries";
 import type { Locale } from "../../../config/site";
 
@@ -22,7 +23,7 @@ export function RankingCard({
 
   return (
     <article className="group">
-      <Link href={`/news/${release.slug}`} className="block">
+      <Link href={articlePath(release)} className="block">
         <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md bg-gray-100">
           {release.thumbnailUrl ? (
             <Image

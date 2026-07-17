@@ -95,7 +95,7 @@ export async function POST(
         metaDescriptionEn,
       },
     });
-    revalidateReleasePaths(updated.slug);
+    revalidateReleasePaths();
   }
   return NextResponse.json({ ok: true, status: updated.status });
 }

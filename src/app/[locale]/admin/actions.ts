@@ -53,7 +53,7 @@ export async function approveRelease(releaseId: string) {
       },
     });
   }
-  revalidateReleasePaths(release.slug);
+  revalidateReleasePaths();
   revalidateAdmin();
 }
 
@@ -81,7 +81,7 @@ export async function adminUnpublishRelease(releaseId: string) {
     where: { id: releaseId },
     data: { status: "UNPUBLISHED", scheduledAt: null },
   });
-  revalidateReleasePaths(release.slug);
+  revalidateReleasePaths();
   revalidateAdmin();
 }
 
@@ -93,7 +93,7 @@ export async function adminRepublishRelease(releaseId: string) {
     where: { id: releaseId },
     data: { status: "PUBLISHED", publishedAt: release.publishedAt ?? new Date() },
   });
-  revalidateReleasePaths(release.slug);
+  revalidateReleasePaths();
   revalidateAdmin();
 }
 
@@ -108,7 +108,7 @@ export async function adminDeleteRelease(releaseId: string) {
     await deletePrivateMediaKit(f.fileKey);
   }
   await prisma.pressRelease.delete({ where: { id: releaseId } });
-  revalidateReleasePaths(release.slug);
+  revalidateReleasePaths();
   revalidateAdmin();
 }
 

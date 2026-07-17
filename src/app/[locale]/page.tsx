@@ -8,6 +8,7 @@ import { getCategories, getLatestReleases, getTopByViews } from "@/lib/queries";
 import { RankingCard } from "@/components/home/RankingCard";
 import { LatestFeed, type FeedItem } from "@/components/home/LatestFeed";
 import { PER_PAGE } from "@/lib/queries";
+import { articlePath } from "@/lib/article-url";
 import { pick } from "@/lib/l10n";
 import type { Locale } from "../../../config/site";
 
@@ -54,6 +55,7 @@ export default async function HomePage({
   const initialItems: FeedItem[] = latestResult.items.map((r) => ({
     id: r.id,
     slug: r.slug,
+    path: articlePath(r),
     titleZh: r.titleZh,
     titleEn: r.titleEn,
     thumbnailUrl: r.thumbnailUrl,

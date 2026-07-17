@@ -44,6 +44,7 @@ model User {
 
 model Company {
   id            String   @id @default(cuid())
+  seq           Int      @unique @default(autoincrement()) // URL用の会社連番（PR TIMES風）
   userId        String   @unique
   user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   slug          String   @unique // /{locale}/company/[slug]
@@ -88,9 +89,10 @@ enum ReleaseStatus {
 
 model PressRelease {
   id        String        @id @default(cuid())
+  seq       Int           @unique @default(autoincrement()) // URL用の記事連番（PR TIMES風）
   companyId String
   company   Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  slug      String        @unique // /{locale}/news/[slug]
+  slug      String        @unique // 内部識別・後方互換用（旧URL）
   status    ReleaseStatus @default(DRAFT)
 
   // 多言語フィールド（片方のみでも公開可）

@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { requireRole } from "@/lib/require-role";
 import { formatTaipei } from "@/lib/dates";
 import { pick } from "@/lib/l10n";
+import { articlePath } from "@/lib/article-url";
 import type { Locale } from "../../../../../../config/site";
 
 export const dynamic = "force-dynamic";
@@ -31,7 +32,7 @@ export default async function MediaRoomReleasePage({
   const release = await prisma.pressRelease.findUnique({
     where: { id },
     include: {
-      company: { select: { nameZh: true, nameEn: true } },
+      company: { select: { seq: true, nameZh: true, nameEn: true } },
       mediaOnlyInfo: true,
       mediaKitFiles: { orderBy: { createdAt: "asc" } },
     },
@@ -61,7 +62,7 @@ export default async function MediaRoomReleasePage({
         </time>
         {" · "}
         <a
-          href={`/${locale}/news/${release.slug}`}
+          href={`/${locale}${articlePath(release)}`}
           target="_blank"
           className="text-blue-700 hover:underline"
         >

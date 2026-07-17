@@ -17,6 +17,7 @@ function publishedWhere(locale: Locale): Prisma.PressReleaseWhereInput {
 
 const listSelect = {
   id: true,
+  seq: true,
   slug: true,
   titleZh: true,
   titleEn: true,
@@ -26,7 +27,7 @@ const listSelect = {
   thumbnailCaption: true,
   publishedAt: true,
   viewCount: true,
-  company: { select: { slug: true, nameZh: true, nameEn: true } },
+  company: { select: { seq: true, slug: true, nameZh: true, nameEn: true } },
   categories: {
     select: { category: { select: { slug: true, nameZh: true, nameEn: true } } },
   },
@@ -85,6 +86,21 @@ export async function getReleaseBySlug(slug: string) {
       categories: { include: { category: true } },
     },
   });
+}
+
+/** PR TIMES風URL（記事seq.会社seq）からの記事取得 */
+export async function getReleaseBySeqs(releaseSeq: number, companySeq: number) {
+  const release = await prisma.pressRelease.findUnique({
+    where: { seq: releaseSeq },
+    include: {
+      company: true,
+      images: { orderBy: { sortOrder: "asc" } },
+      categories: { include: { category: true } },
+    },
+  });
+  // 会社seqが一致しない場合は不正なURLとして扱う
+  if (!release || release.company.seq !== companySeq) return null;
+  return release;
 }
 
 export async function getCategories() {
@@ -193,10 +209,12 @@ export async function getRecentReleasesForNewsSitemap() {
       publishedAt: { gte: cutoff, lte: new Date() },
     },
     select: {
+      seq: true,
       slug: true,
       titleZh: true,
       titleEn: true,
       publishedAt: true,
+      company: { select: { seq: true } },
     },
     orderBy: { publishedAt: "desc" },
     take: 1000,
@@ -212,11 +230,13 @@ export async function getAllPublishedForSitemap() {
         publishedAt: { lte: new Date() },
       },
       select: {
+        seq: true,
         slug: true,
         titleZh: true,
         titleEn: true,
         updatedAt: true,
         publishedAt: true,
+        company: { select: { seq: true } },
       },
       orderBy: { publishedAt: "desc" },
       take: 5000,

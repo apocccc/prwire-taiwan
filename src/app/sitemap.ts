@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllPublishedForSitemap } from "@/lib/queries";
+import { articlePath } from "@/lib/article-url";
 import { siteConfig } from "../../config/site";
 
 export const revalidate = 3600;
@@ -24,9 +25,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const { releases, categories, companies } = await getAllPublishedForSitemap();
 
     for (const r of releases) {
+      const path = articlePath(r);
       if (r.titleZh) {
         entries.push({
-          url: `${base}/zh/news/${r.slug}`,
+          url: `${base}/zh${path}`,
           lastModified: r.updatedAt,
           changeFrequency: "weekly",
           priority: 0.8,
@@ -34,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }
       if (r.titleEn) {
         entries.push({
-          url: `${base}/en/news/${r.slug}`,
+          url: `${base}/en${path}`,
           lastModified: r.updatedAt,
           changeFrequency: "weekly",
           priority: 0.8,

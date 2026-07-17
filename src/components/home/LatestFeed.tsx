@@ -11,6 +11,8 @@ import type { Locale } from "../../../config/site";
 export interface FeedItem {
   id: string;
   slug: string;
+  /** ロケールを除いた記事パス（PR TIMES風 /news/xxx.yyy.html） */
+  path: string;
   titleZh: string | null;
   titleEn: string | null;
   thumbnailUrl: string | null;
@@ -26,7 +28,7 @@ function FeedRow({ item, locale }: { item: FeedItem; locale: Locale }) {
 
   return (
     <article className="group border-b border-gray-200 py-5">
-      <Link href={`/news/${item.slug}`} className="flex items-start gap-4">
+      <Link href={item.path} className="flex items-start gap-4">
         <div className="min-w-0 flex-1">
           <h3 className="line-clamp-2 font-semibold leading-snug group-hover:text-[#d51f1a]">
             {title}

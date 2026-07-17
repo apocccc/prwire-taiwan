@@ -123,7 +123,7 @@ export async function PUT(
 
   // 公開中リリースの編集は即時反映
   if (updated.status === "PUBLISHED") {
-    revalidateReleasePaths(updated.slug);
+    revalidateReleasePaths();
   }
 
   return NextResponse.json({ ok: true, slug: updated.slug });
@@ -148,6 +148,6 @@ export async function DELETE(
     await deletePrivateMediaKit(f.fileKey);
   }
   await prisma.pressRelease.delete({ where: { id } });
-  revalidateReleasePaths(release.slug);
+  revalidateReleasePaths();
   return NextResponse.json({ ok: true });
 }

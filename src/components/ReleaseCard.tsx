@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { formatTaipeiDate } from "@/lib/dates";
 import { pick } from "@/lib/l10n";
+import { articlePath } from "@/lib/article-url";
 import type { ReleaseListItem } from "@/lib/queries";
 import type { Locale } from "../../config/site";
 
@@ -19,7 +20,7 @@ export function ReleaseCard({
 
   return (
     <article className="group overflow-hidden rounded-lg border border-gray-200 bg-white transition-shadow hover:shadow-md">
-      <Link href={`/news/${release.slug}`} className="block">
+      <Link href={articlePath(release)} className="block">
         {release.thumbnailUrl ? (
           <div className="relative aspect-[16/9] w-full bg-gray-100">
             <Image

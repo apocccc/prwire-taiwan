@@ -1,4 +1,5 @@
 import { getRecentReleasesForNewsSitemap } from "@/lib/queries";
+import { articlePath } from "@/lib/article-url";
 import { siteConfig } from "../../../config/site";
 
 export const revalidate = 900;
@@ -29,11 +30,12 @@ export async function GET() {
       { locale: "zh", title: r.titleZh },
       { locale: "en", title: r.titleEn },
     ];
+    const path = articlePath(r);
     for (const v of variants) {
       if (!v.title || !r.publishedAt) continue;
       urls.push(
         `  <url>
-    <loc>${siteConfig.url}/${v.locale}/news/${xmlEscape(r.slug)}</loc>
+    <loc>${siteConfig.url}/${v.locale}${path}</loc>
     <news:news>
       <news:publication>
         <news:name>${xmlEscape(siteConfig.name[v.locale])}</news:name>

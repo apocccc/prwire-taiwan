@@ -7,7 +7,8 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ViewBeacon } from "@/components/ViewBeacon";
 import { JsonLd, newsArticleJsonLd } from "@/lib/jsonld";
 import { buildMetadata, truncateDescription } from "@/lib/seo";
-import { getReleaseBySlug } from "@/lib/queries";
+import { getReleaseBySeqs, getReleaseBySlug } from "@/lib/queries";
+import { articlePath, parseArticleParam } from "@/lib/article-url";
 import { TiptapContent, tiptapToPlainText } from "@/lib/tiptap-render";
 import { formatTaipei } from "@/lib/dates";
 import { pick } from "@/lib/l10n";
@@ -20,8 +21,12 @@ export function generateStaticParams() {
   return [];
 }
 
-async function getPublishedRelease(slug: string, locale: Locale) {
-  const release = await getReleaseBySlug(slug);
+async function getPublishedRelease(param: string, locale: Locale) {
+  // PR TIMES風の {記事seq}.{会社seq}.html を優先、旧slugは後方互換で許容
+  const parsed = parseArticleParam(param);
+  const release = parsed
+    ? await getReleaseBySeqs(parsed.releaseSeq, parsed.companySeq)
+    : await getReleaseBySlug(param);
   if (
     !release ||
     !["PUBLISHED", "SCHEDULED"].includes(release.status) ||
@@ -61,7 +66,7 @@ export async function generateMetadata({
 
   return buildMetadata({
     locale: l,
-    path: `/news/${slug}`,
+    path: articlePath(release),
     title,
     description,
     availableLocales: availableLocales(release),
@@ -102,7 +107,7 @@ export default async function ArticlePage({
   const description =
     (l === "zh" ? release.metaDescriptionZh : release.metaDescriptionEn) ||
     truncateDescription(tiptapToPlainText(body));
-  const url = `${siteConfig.url}/${l}/news/${release.slug}`;
+  const url = `${siteConfig.url}/${l}${articlePath(release)}`;
   const primaryCategory = release.categories[0]?.category;
 
   return (

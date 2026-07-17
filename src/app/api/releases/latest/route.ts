@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getLatestReleases } from "@/lib/queries";
+import { articlePath } from "@/lib/article-url";
 import { routing } from "@/i18n/routing";
 import type { Locale } from "../../../../../config/site";
 
@@ -22,6 +23,7 @@ export async function GET(request: Request) {
     items: items.map((r) => ({
       id: r.id,
       slug: r.slug,
+      path: articlePath(r),
       titleZh: r.titleZh,
       titleEn: r.titleEn,
       thumbnailUrl: r.thumbnailUrl,
