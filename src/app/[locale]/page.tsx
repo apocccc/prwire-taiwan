@@ -6,7 +6,8 @@ import { JsonLd, websiteJsonLd } from "@/lib/jsonld";
 import { buildMetadata } from "@/lib/seo";
 import { getCategories, getLatestReleases, getTopByViews } from "@/lib/queries";
 import { RankingCard } from "@/components/home/RankingCard";
-import { LatestRow } from "@/components/home/LatestRow";
+import { LatestFeed, type FeedItem } from "@/components/home/LatestFeed";
+import { PER_PAGE } from "@/lib/queries";
 import { pick } from "@/lib/l10n";
 import type { Locale } from "../../../config/site";
 
@@ -44,11 +45,23 @@ export default async function HomePage({
   const tHome = await getTranslations("home");
   const tNews = await getTranslations("news");
 
-  const [ranking, { items: latest }, categories] = await Promise.all([
+  const [ranking, latestResult, categories] = await Promise.all([
     getTopByViews(l, 6, period),
     getLatestReleases(l, 1),
     getCategories(),
   ]);
+
+  const initialItems: FeedItem[] = latestResult.items.map((r) => ({
+    id: r.id,
+    slug: r.slug,
+    titleZh: r.titleZh,
+    titleEn: r.titleEn,
+    thumbnailUrl: r.thumbnailUrl,
+    thumbnailCaption: r.thumbnailCaption,
+    publishedAt: r.publishedAt ? r.publishedAt.toISOString() : null,
+    company: { nameZh: r.company.nameZh, nameEn: r.company.nameEn },
+  }));
+  const initialHasMore = latestResult.total > PER_PAGE;
 
   const rankTabs: { key: RankPeriod; label: string }[] = [
     { key: "all", label: tHome("rankAll") },
@@ -130,19 +143,14 @@ export default async function HomePage({
               {tHome("latestNews")}
             </h2>
             <div className="mt-2">
-              {latest.length > 0 ? (
-                latest.map((r) => <LatestRow key={r.id} release={r} locale={l} />)
+              {initialItems.length > 0 ? (
+                <LatestFeed
+                  initialItems={initialItems}
+                  initialHasMore={initialHasMore}
+                />
               ) : (
                 <p className="py-6 text-gray-500">{tNews("empty")}</p>
               )}
-            </div>
-            <div className="mt-6">
-              <Link
-                href="/news"
-                className="inline-block rounded border border-[#d51f1a] px-5 py-2 text-sm font-medium text-[#d51f1a] hover:bg-[#d51f1a] hover:text-white"
-              >
-                {tHome("viewAll")}
-              </Link>
             </div>
           </section>
 

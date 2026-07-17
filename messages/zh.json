@@ -69,6 +69,9 @@
     "rankNote": "依站內瀏覽數排序",
     "categories": "新聞稿分類",
     "views": "瀏覽",
+    "seeMore": "顯示更多",
+    "noMore": "已顯示全部新聞稿",
+    "loadError": "載入失敗，請稍後再試",
     "bannerAlt": "免費發布，讓消息傳遍台灣",
     "receivePr": "接收新聞稿",
     "registerCompany": "企業登錄申請"
