@@ -25,6 +25,7 @@ const listSelect = {
   thumbnailUrl: true,
   thumbnailCaption: true,
   publishedAt: true,
+  viewCount: true,
   company: { select: { slug: true, nameZh: true, nameEn: true } },
   categories: {
     select: { category: { select: { slug: true, nameZh: true, nameEn: true } } },
@@ -48,6 +49,31 @@ export async function getLatestReleases(locale: Locale, page = 1) {
     prisma.pressRelease.count({ where }),
   ]);
   return { items, total, totalPages: Math.max(1, Math.ceil(total / PER_PAGE)) };
+}
+
+/**
+ * PVランキング（システム内の viewCount 基準）。
+ * period: "all"=全期間 / "month"=直近30日公開 / "week"=直近7日公開 の中でPV降順。
+ */
+export async function getTopByViews(
+  locale: Locale,
+  limit = 6,
+  period: "all" | "month" | "week" = "all"
+) {
+  const where: Prisma.PressReleaseWhereInput = { ...publishedWhere(locale) };
+  if (period !== "all") {
+    const days = period === "week" ? 7 : 30;
+    where.publishedAt = {
+      lte: new Date(),
+      gte: new Date(Date.now() - days * 24 * 60 * 60 * 1000),
+    };
+  }
+  return prisma.pressRelease.findMany({
+    where,
+    select: listSelect,
+    orderBy: [{ viewCount: "desc" }, { publishedAt: "desc" }],
+    take: limit,
+  });
 }
 
 export async function getReleaseBySlug(slug: string) {

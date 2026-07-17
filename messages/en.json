@@ -61,7 +61,17 @@
     "latestNews": "Latest Press Releases",
     "browseCategories": "Browse by Category",
     "comingSoon": "Press release content coming soon",
-    "viewAll": "View all"
+    "viewAll": "View all",
+    "ranking": "Popular Ranking",
+    "rankAll": "All-time",
+    "rankWeek": "This week",
+    "rankMonth": "This month",
+    "rankNote": "Ranked by on-site views",
+    "categories": "Categories",
+    "views": "views",
+    "bannerAlt": "Publish for free and reach all of Taiwan",
+    "receivePr": "Receive releases",
+    "registerCompany": "Register your company"
   },
   "news": {
     "listTitle": "Latest Press Releases",

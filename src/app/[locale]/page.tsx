@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { JsonLd, websiteJsonLd } from "@/lib/jsonld";
 import { buildMetadata } from "@/lib/seo";
-import { getCategories, getLatestReleases } from "@/lib/queries";
-import { ReleaseGrid } from "@/components/ReleaseCard";
+import { getCategories, getLatestReleases, getTopByViews } from "@/lib/queries";
+import { RankingCard } from "@/components/home/RankingCard";
+import { LatestRow } from "@/components/home/LatestRow";
 import { pick } from "@/lib/l10n";
 import type { Locale } from "../../../config/site";
 
@@ -19,62 +21,165 @@ export async function generateMetadata({
   return buildMetadata({ locale: locale as Locale, path: "/" });
 }
 
+const RANK_PERIODS = ["all", "week", "month"] as const;
+type RankPeriod = (typeof RANK_PERIODS)[number];
+
 export default async function HomePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ rank?: string }>;
 }) {
   const { locale } = await params;
+  const { rank } = await searchParams;
   setRequestLocale(locale);
   const l = locale as Locale;
+
+  const period: RankPeriod = RANK_PERIODS.includes(rank as RankPeriod)
+    ? (rank as RankPeriod)
+    : "all";
 
   const t = await getTranslations("common");
   const tHome = await getTranslations("home");
   const tNews = await getTranslations("news");
 
-  const [{ items }, categories] = await Promise.all([
+  const [ranking, { items: latest }, categories] = await Promise.all([
+    getTopByViews(l, 6, period),
     getLatestReleases(l, 1),
     getCategories(),
   ]);
 
-  return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
-      <JsonLd data={websiteJsonLd(l)} />
-      <h1 className="text-3xl font-bold">{t("siteTagline")}</h1>
+  const rankTabs: { key: RankPeriod; label: string }[] = [
+    { key: "all", label: tHome("rankAll") },
+    { key: "week", label: tHome("rankWeek") },
+    { key: "month", label: tHome("rankMonth") },
+  ];
 
-      <section className="mt-10">
-        <div className="flex items-baseline justify-between">
-          <h2 className="text-xl font-semibold">{tHome("latestNews")}</h2>
-          <Link href="/news" className="text-sm text-blue-700 hover:underline">
-            {tHome("viewAll")}
-          </Link>
+  return (
+    <div className="bg-white">
+      <JsonLd data={websiteJsonLd(l)} />
+
+      {/* ヒーロー見出し */}
+      <div className="border-b border-gray-200 bg-gradient-to-r from-[#d51f1a] to-[#b3160f]">
+        <div className="mx-auto max-w-6xl px-4 py-6">
+          <h1 className="text-2xl font-bold text-white sm:text-3xl">
+            {t("siteTagline")}
+          </h1>
         </div>
-        <div className="mt-4">
-          {items.length > 0 ? (
-            <ReleaseGrid releases={items} locale={l} priorityCount={3} />
+      </div>
+
+      {/* ランキング（PVベース） */}
+      <section className="bg-gray-50">
+        <div className="mx-auto max-w-6xl px-4 py-8">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <h2 className="border-l-4 border-[#d51f1a] pl-3 text-lg font-bold">
+                {tHome("ranking")}
+              </h2>
+              <div className="flex gap-1">
+                {rankTabs.map((tab) => (
+                  <Link
+                    key={tab.key}
+                    href={
+                      tab.key === "all"
+                        ? "/"
+                        : { pathname: "/", query: { rank: tab.key } }
+                    }
+                    className={`rounded-full px-3 py-1 text-xs font-medium ${
+                      period === tab.key
+                        ? "bg-[#d51f1a] text-white"
+                        : "bg-white text-gray-600 hover:bg-gray-100"
+                    }`}
+                  >
+                    {tab.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <Link href="/news" className="text-sm text-[#d51f1a] hover:underline">
+              {tHome("viewAll")} →
+            </Link>
+          </div>
+
+          {ranking.length > 0 ? (
+            <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-6">
+              {ranking.map((r, i) => (
+                <RankingCard
+                  key={r.id}
+                  release={r}
+                  rank={i + 1}
+                  locale={l}
+                  priority={i < 3}
+                />
+              ))}
+            </div>
           ) : (
-            <p className="text-gray-600">{tNews("empty")}</p>
+            <p className="mt-5 text-gray-500">{tNews("empty")}</p>
           )}
+          <p className="mt-3 text-xs text-gray-400">{tHome("rankNote")}</p>
         </div>
       </section>
 
-      {categories.length > 0 && (
-        <section className="mt-12">
-          <h2 className="text-xl font-semibold">{tHome("browseCategories")}</h2>
-          <ul className="mt-4 flex flex-wrap gap-2">
-            {categories.map((c) => (
-              <li key={c.id}>
-                <Link
-                  href={`/category/${c.slug}`}
-                  className="inline-block rounded-full border border-gray-300 px-4 py-1.5 text-sm hover:bg-gray-50"
-                >
-                  {pick(l, c.nameZh, c.nameEn)}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+      {/* 本体: 新着 + サイドバー */}
+      <div className="mx-auto max-w-6xl px-4 py-10">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
+          {/* 新着プレスリリース */}
+          <section className="lg:col-span-2">
+            <h2 className="border-l-4 border-[#d51f1a] pl-3 text-lg font-bold">
+              {tHome("latestNews")}
+            </h2>
+            <div className="mt-2">
+              {latest.length > 0 ? (
+                latest.map((r) => <LatestRow key={r.id} release={r} locale={l} />)
+              ) : (
+                <p className="py-6 text-gray-500">{tNews("empty")}</p>
+              )}
+            </div>
+            <div className="mt-6">
+              <Link
+                href="/news"
+                className="inline-block rounded border border-[#d51f1a] px-5 py-2 text-sm font-medium text-[#d51f1a] hover:bg-[#d51f1a] hover:text-white"
+              >
+                {tHome("viewAll")}
+              </Link>
+            </div>
+          </section>
+
+          {/* サイドバー: バナー + カテゴリ */}
+          <aside>
+            <Link href="/register/publisher" className="block overflow-hidden rounded-lg">
+              <Image
+                src="/banner-taiwan.jpg"
+                alt={tHome("bannerAlt")}
+                width={1000}
+                height={1000}
+                className="h-auto w-full"
+                priority
+              />
+            </Link>
+
+            <div className="mt-6 rounded-lg border border-gray-200">
+              <h2 className="border-b border-gray-200 bg-gray-50 px-4 py-3 text-base font-bold">
+                {tHome("categories")}
+              </h2>
+              <ul className="divide-y divide-gray-100">
+                {categories.map((c) => (
+                  <li key={c.id}>
+                    <Link
+                      href={`/category/${c.slug}`}
+                      className="flex items-center justify-between px-4 py-3 text-sm hover:bg-gray-50 hover:text-[#d51f1a]"
+                    >
+                      <span>{pick(l, c.nameZh, c.nameEn)}</span>
+                      <span className="text-gray-300">›</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
     </div>
   );
 }
