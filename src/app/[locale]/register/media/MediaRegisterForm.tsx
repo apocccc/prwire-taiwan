@@ -35,6 +35,7 @@ export function MediaRegisterForm() {
         consentMediaListing: form.get("consentMediaListing") === "on",
         consentDirectSend: form.get("consentDirectSend") === "on",
         consentTerms: form.get("consentTerms") === "on",
+        consentPrivacy: form.get("consentPrivacy") === "on",
       }),
     });
 

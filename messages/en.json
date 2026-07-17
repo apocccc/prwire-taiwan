@@ -25,7 +25,8 @@
     "dashboard": "Publisher Dashboard",
     "adminPanel": "Admin",
     "mediaRoom": "Media Room",
-    "terms": "Terms of Service"
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy"
   },
   "auth": {
     "loginTitle": "Log in",
@@ -50,7 +51,9 @@
     "consentMediaListing": "I agree that the outlet name, URL, and coverage area will be listed on the public media directory (individual contact details remain private).",
     "consentDirectSend": "I agree that, when the direct-delivery feature launches, companies may deliver press release information directly to designated media.",
     "consentTerms": "I have read and agree to the Terms of Service.",
+    "consentPrivacy": "I have read and agree to the Privacy Policy.",
     "viewTerms": "Read the Terms of Service",
+    "viewPrivacy": "Read the Privacy Policy",
     "registerSuccessPublisher": "Registration complete. Please log in to start publishing.",
     "registerSuccessMedia": "Your application has been submitted. You can log in to the Media Room once an administrator approves your account.",
     "emailTaken": "This email is already registered",
@@ -220,6 +223,9 @@
   "terms": {
     "title": "Terms of Service",
     "updated": "Last updated"
+  },
+  "privacy": {
+    "title": "Privacy Policy"
   },
   "footer": {
     "operatedBy": "Operated by ",

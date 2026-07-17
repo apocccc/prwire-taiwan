@@ -98,13 +98,29 @@ export default async function LocaleLayout({
                       {t("terms")}
                     </Link>
                   </li>
+                  <li>
+                    <Link href="/privacy" className="hover:underline">
+                      {t("privacy")}
+                    </Link>
+                  </li>
                 </ul>
               </nav>
               {settings.footerText[l] && <p className="mt-4">{settings.footerText[l]}</p>}
-              <p className="mt-4">
-                {tFooter("operatedBy")}
-                {siteConfig.operator.companyName}（{siteConfig.operator.serviceBrand}）
-              </p>
+              <address className="mt-4 not-italic">
+                <p>
+                  {tFooter("operatedBy")}
+                  {siteConfig.operator.companyName}
+                </p>
+                <p className="mt-1">
+                  <a
+                    href={`mailto:${siteConfig.operator.email}`}
+                    className="hover:underline"
+                  >
+                    {siteConfig.operator.email}
+                  </a>
+                </p>
+                <p className="mt-1">{siteConfig.operator.address}</p>
+              </address>
               <p className="mt-1">
                 © {new Date().getFullYear()} {settings.name[l]}
               </p>

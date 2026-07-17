@@ -9,6 +9,7 @@ const consentSchema = z.object({
   consentMediaListing: z.literal(true),
   consentDirectSend: z.literal(true),
   consentTerms: z.literal(true),
+  consentPrivacy: z.literal(true),
 });
 
 const credentialsSchema = z.object({

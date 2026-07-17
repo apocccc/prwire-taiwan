@@ -40,10 +40,13 @@ export const siteConfig = {
   /** 公開日時の表示タイムゾーン */
   timezone: "Asia/Taipei",
 
-  /** 運営者情報（利用規約・JSON-LD publisher 用） */
+  /** 運営者情報（利用規約・プライバシーポリシー・JSON-LD publisher 用／全て英語表記） */
   operator: {
-    companyName: "株式会社APOC",
+    companyName: "APOC Co., Ltd.",
     serviceBrand: "APOC Wire",
+    email: "support@apocc.co.jp",
+    address:
+      "306, Shirahato Mansion, 4-4-3 Itabashi, Itabashi-ku, Tokyo 173-0004, Japan",
   },
 } as const;
 

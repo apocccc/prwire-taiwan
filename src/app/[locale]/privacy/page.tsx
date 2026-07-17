@@ -3,7 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { LegalDocument, OperatorContact } from "@/components/LegalDocument";
 import { buildMetadata } from "@/lib/seo";
-import { blocks } from "@/data/legal-terms";
+import { blocks } from "@/data/legal-privacy";
 import type { Locale } from "../../../../config/site";
 
 export const revalidate = 3600;
@@ -14,15 +14,15 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "terms" });
+  const t = await getTranslations({ locale, namespace: "privacy" });
   return buildMetadata({
     locale: locale as Locale,
-    path: "/terms",
+    path: "/privacy",
     title: t("title"),
   });
 }
 
-export default async function TermsPage({
+export default async function PrivacyPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
@@ -30,7 +30,7 @@ export default async function TermsPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const l = locale as Locale;
-  const t = await getTranslations("terms");
+  const t = await getTranslations("privacy");
   const tNav = await getTranslations("nav");
 
   return (

@@ -25,7 +25,8 @@
     "dashboard": "發布後台",
     "adminPanel": "管理後台",
     "mediaRoom": "媒體專區",
-    "terms": "服務條款"
+    "terms": "服務條款",
+    "privacy": "隱私權政策"
   },
   "auth": {
     "loginTitle": "登入",
@@ -50,7 +51,9 @@
     "consentMediaListing": "我同意媒體名稱、媒體網址、報導領域將於公開媒體列表頁刊登（個別聯絡方式不公開）。",
     "consentDirectSend": "我同意未來平台提供「直接送達」功能時，企業得將新聞稿資訊直接送達至指定媒體。",
     "consentTerms": "我已閱讀並同意服務條款。",
+    "consentPrivacy": "我已閱讀並同意隱私權政策。",
     "viewTerms": "閱讀服務條款",
+    "viewPrivacy": "閱讀隱私權政策",
     "registerSuccessPublisher": "註冊完成，請登入開始發布新聞稿。",
     "registerSuccessMedia": "註冊申請已送出。待管理員審核通過後，您將可以登入媒體專區。",
     "emailTaken": "此電子郵件已被註冊",
@@ -220,6 +223,9 @@
   "terms": {
     "title": "服務條款",
     "updated": "最後更新日期"
+  },
+  "privacy": {
+    "title": "隱私權政策"
   },
   "footer": {
     "operatedBy": "營運：",
