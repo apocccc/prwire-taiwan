@@ -33,10 +33,21 @@ export function LoginForm() {
     }
     const callbackUrl = searchParams.get("callbackUrl");
     // オープンリダイレクト防止: サイト内パスのみ許可
-    const target =
+    let target =
       callbackUrl && callbackUrl.startsWith("/") && !callbackUrl.startsWith("//")
         ? callbackUrl
-        : `/${locale}/dashboard`;
+        : null;
+    if (!target) {
+      // ロール別の既定ページへ
+      const session = await fetch("/api/auth/session").then((r) => r.json()).catch(() => null);
+      const role = session?.user?.role;
+      target =
+        role === "ADMIN"
+          ? `/${locale}/admin`
+          : role === "MEDIA"
+            ? `/${locale}/media-room`
+            : `/${locale}/dashboard`;
+    }
     router.push(target);
     router.refresh();
   }
