@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 /**
  * 利用規約同意チェック（事業者・メディア共通、全項目必須）
@@ -11,6 +11,7 @@ import { useTranslations } from "next-intl";
  */
 export function ConsentCheckboxes() {
   const t = useTranslations("auth");
+  const locale = useLocale();
 
   const items = [
     { name: "consentCaseStudy", label: t("consentCaseStudy") },
@@ -22,6 +23,15 @@ export function ConsentCheckboxes() {
   return (
     <fieldset className="rounded border border-gray-300 p-4">
       <legend className="px-1 text-sm font-semibold">{t("consentTitle")}</legend>
+      <p className="mb-3 text-sm">
+        <a
+          href={`/${locale}/terms`}
+          target="_blank"
+          className="text-blue-700 hover:underline"
+        >
+          {t("viewTerms")} ↗
+        </a>
+      </p>
       <div className="space-y-3">
         {items.map((item) => (
           <label key={item.name} className="flex items-start gap-2 text-sm">

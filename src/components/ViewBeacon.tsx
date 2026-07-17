@@ -12,8 +12,11 @@ export function ViewBeacon({ releaseId }: { releaseId: string }) {
     } catch {
       // sessionStorage 不可の環境でも計測は続行
     }
-    navigator.sendBeacon?.(`/api/releases/${releaseId}/view`) ??
+    if (typeof navigator.sendBeacon === "function") {
+      navigator.sendBeacon(`/api/releases/${releaseId}/view`);
+    } else {
       fetch(`/api/releases/${releaseId}/view`, { method: "POST", keepalive: true });
+    }
   }, [releaseId]);
 
   return null;

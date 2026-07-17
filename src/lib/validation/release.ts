@@ -3,7 +3,6 @@ import { collectBodyImages } from "@/lib/tiptap-render";
 
 export const MAX_BODY_IMAGES = 10;
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 const tiptapDoc = z
   .object({ type: z.literal("doc") })
   .passthrough()
