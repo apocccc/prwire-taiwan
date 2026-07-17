@@ -24,7 +24,7 @@ async function getPublishedRelease(slug: string, locale: Locale) {
   const release = await getReleaseBySlug(slug);
   if (
     !release ||
-    release.status !== "PUBLISHED" ||
+    !["PUBLISHED", "SCHEDULED"].includes(release.status) ||
     !release.publishedAt ||
     release.publishedAt > new Date()
   ) {

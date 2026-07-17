@@ -8,7 +8,8 @@ export const PER_PAGE = 12;
 /** 指定ロケール版が存在する公開済みリリースの where 条件 */
 function publishedWhere(locale: Locale): Prisma.PressReleaseWhereInput {
   return {
-    status: "PUBLISHED",
+    // SCHEDULED は公開時刻を過ぎた時点で公開扱い（ISR再生成時に反映）
+    status: { in: ["PUBLISHED", "SCHEDULED"] },
     publishedAt: { lte: new Date() },
     ...(locale === "zh" ? { titleZh: { not: null } } : { titleEn: { not: null } }),
   };
@@ -162,7 +163,7 @@ export async function getRecentReleasesForNewsSitemap() {
   const cutoff = new Date(Date.now() - 48 * 60 * 60 * 1000);
   return prisma.pressRelease.findMany({
     where: {
-      status: "PUBLISHED",
+      status: { in: ["PUBLISHED", "SCHEDULED"] },
       publishedAt: { gte: cutoff, lte: new Date() },
     },
     select: {
@@ -180,7 +181,10 @@ export async function getRecentReleasesForNewsSitemap() {
 export async function getAllPublishedForSitemap() {
   const [releases, categories, companies] = await Promise.all([
     prisma.pressRelease.findMany({
-      where: { status: "PUBLISHED", publishedAt: { lte: new Date() } },
+      where: {
+        status: { in: ["PUBLISHED", "SCHEDULED"] },
+        publishedAt: { lte: new Date() },
+      },
       select: {
         slug: true,
         titleZh: true,
