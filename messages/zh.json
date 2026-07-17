@@ -26,7 +26,10 @@
     "adminPanel": "管理後台",
     "mediaRoom": "媒體專區",
     "terms": "服務條款",
-    "privacy": "隱私權政策"
+    "privacy": "隱私權政策",
+    "freeDistribute": "免費發布新聞稿",
+    "companyLogin": "企業登入",
+    "mediaLogin": "媒體登入"
   },
   "auth": {
     "loginTitle": "登入",

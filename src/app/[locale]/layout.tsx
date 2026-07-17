@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -52,28 +53,39 @@ export default async function LocaleLayout({
       <body className="antialiased min-h-screen flex flex-col bg-white text-gray-900">
         <NextIntlClientProvider>
           <header className="border-b border-gray-200">
-            <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between gap-4">
-              <Link href="/" className="font-bold text-lg shrink-0">
-                {settings.name[l]}
+            <div className="mx-auto max-w-6xl px-4 py-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+              <Link href="/" className="shrink-0" aria-label={settings.name[l]}>
+                <Image
+                  src="/logo.png"
+                  alt={settings.name[l]}
+                  width={1500}
+                  height={300}
+                  priority
+                  className="h-9 w-auto sm:h-10"
+                />
               </Link>
-              <nav aria-label="Global" className="flex items-center gap-4">
-                <ul className="hidden sm:flex items-center gap-4 text-sm">
-                  <li>
-                    <Link href="/news" className="hover:underline">
-                      {t("news")}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/media" className="hover:underline">
-                      {t("mediaList")}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/login" className="hover:underline">
-                      {t("dashboard")}
-                    </Link>
-                  </li>
-                </ul>
+              <nav
+                aria-label="Global"
+                className="flex flex-wrap items-center justify-end gap-2 sm:gap-3"
+              >
+                <Link
+                  href="/register/publisher"
+                  className="rounded bg-[#d51f1a] px-3 py-2 text-xs font-semibold text-white hover:bg-[#b3160f] sm:text-sm"
+                >
+                  {t("freeDistribute")}
+                </Link>
+                <Link
+                  href="/login"
+                  className="rounded border border-gray-300 px-3 py-2 text-xs font-medium text-gray-700 hover:border-[#d51f1a] hover:text-[#d51f1a] sm:text-sm"
+                >
+                  {t("companyLogin")}
+                </Link>
+                <Link
+                  href="/login"
+                  className="rounded border border-gray-300 px-3 py-2 text-xs font-medium text-gray-700 hover:border-[#d51f1a] hover:text-[#d51f1a] sm:text-sm"
+                >
+                  {t("mediaLogin")}
+                </Link>
                 <LocaleSwitcher />
               </nav>
             </div>

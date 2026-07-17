@@ -26,7 +26,10 @@
     "adminPanel": "Admin",
     "mediaRoom": "Media Room",
     "terms": "Terms of Service",
-    "privacy": "Privacy Policy"
+    "privacy": "Privacy Policy",
+    "freeDistribute": "Free Distribution",
+    "companyLogin": "Company Login",
+    "mediaLogin": "Media Login"
   },
   "auth": {
     "loginTitle": "Log in",
