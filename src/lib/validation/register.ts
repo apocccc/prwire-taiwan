@@ -5,9 +5,6 @@ import { z } from "zod";
  * 事業者・メディア共通で全項目必須。
  */
 const consentSchema = z.object({
-  consentCaseStudy: z.literal(true),
-  consentMediaListing: z.literal(true),
-  consentDirectSend: z.literal(true),
   consentTerms: z.literal(true),
   consentPrivacy: z.literal(true),
 });

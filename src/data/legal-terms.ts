@@ -32,7 +32,7 @@ export const blocks: LegalBlock[] = [
 },
 {
 "t": "p",
-"s": "Effective Date / 生效日 / 発効日：[____年__月__日]"
+"s": "Effective Date / 生效日 / 発効日：18 July 2026 / 2026年7月18日"
 },
 {
 "t": "p",
@@ -664,11 +664,11 @@ export const blocks: LegalBlock[] = [
 },
 {
 "t": "p",
-"s": "Address: [______________________________]"
+"s": "Address: 306, Shirahato Mansion, 4-4-3 Itabashi, Itabashi-ku, Tokyo 173-0004, Japan"
 },
 {
 "t": "p",
-"s": "Email: [______________________________]"
+"s": "Email: support@apocc.co.jp"
 },
 {
 "t": "p",
@@ -1280,11 +1280,11 @@ export const blocks: LegalBlock[] = [
 },
 {
 "t": "p",
-"s": "地址：[______________________________]"
+"s": "地址：306, Shirahato Mansion, 4-4-3 Itabashi, Itabashi-ku, Tokyo 173-0004, Japan"
 },
 {
 "t": "p",
-"s": "電子郵件：[______________________________]"
+"s": "電子郵件：support@apocc.co.jp"
 },
 {
 "t": "p",
@@ -1896,11 +1896,11 @@ export const blocks: LegalBlock[] = [
 },
 {
 "t": "p",
-"s": "住所：[______________________________]"
+"s": "住所：306, Shirahato Mansion, 4-4-3 Itabashi, Itabashi-ku, Tokyo 173-0004, Japan"
 },
 {
 "t": "p",
-"s": "メールアドレス：[______________________________]"
+"s": "メールアドレス：support@apocc.co.jp"
 },
 {
 "t": "p",
