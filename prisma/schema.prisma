@@ -74,7 +74,8 @@ model MediaOutlet {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  categoryFollows CategoryFollow[]
+  categoryFollows    CategoryFollow[]
+  disclosureRequests DisclosureRequest[]
 }
 
 // ---------- プレスリリース ----------
@@ -111,6 +112,12 @@ model PressRelease {
   thumbnailUrl     String?
   thumbnailCaption String?
 
+  // このプレスリリースに関する連絡先情報（必須・メディア限定・開示請求で事業者へ通知）
+  pressContactDept  String?
+  pressContactName  String?
+  pressContactEmail String?
+  pressContactPhone String? // 台湾国コード +886 を含む
+
   scheduledAt DateTime? // 公開予約日時
   publishedAt DateTime?
   viewCount   Int       @default(0)
@@ -119,13 +126,27 @@ model PressRelease {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  images        ReleaseImage[]
-  categories    ReleaseCategory[]
-  mediaOnlyInfo MediaOnlyInfo?
-  mediaKitFiles MediaKitFile[]
+  images             ReleaseImage[]
+  categories         ReleaseCategory[]
+  mediaOnlyInfo      MediaOnlyInfo?
+  mediaKitFiles      MediaKitFile[]
+  disclosureRequests DisclosureRequest[]
 
   @@index([status, publishedAt(sort: Desc)])
   @@index([companyId, status])
+}
+
+// メディア限定情報・連絡先の開示請求（誰が閲覧請求したかを事業者へ通知するため記録）
+model DisclosureRequest {
+  id            String       @id @default(cuid())
+  releaseId     String
+  release       PressRelease @relation(fields: [releaseId], references: [id], onDelete: Cascade)
+  mediaOutletId String
+  mediaOutlet   MediaOutlet  @relation(fields: [mediaOutletId], references: [id], onDelete: Cascade)
+  createdAt     DateTime     @default(now())
+
+  @@unique([releaseId, mediaOutletId])
+  @@index([releaseId])
 }
 
 // 本文中画像（最大10枚はアプリ側で制約、キャプション必須）
