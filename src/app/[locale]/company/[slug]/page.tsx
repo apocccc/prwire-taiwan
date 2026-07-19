@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { CompanyInfoBlock } from "@/components/CompanyInfoBlock";
 import { ReleaseGrid } from "@/components/ReleaseCard";
 import { Pagination } from "@/components/Pagination";
 import { JsonLd, organizationJsonLd } from "@/lib/jsonld";
@@ -84,18 +85,7 @@ export default async function CompanyPage({
         <div>
           <h1 className="text-2xl font-bold">{name}</h1>
           {description && <p className="mt-2 text-gray-600">{description}</p>}
-          {company.websiteUrl && (
-            <p className="mt-2 text-sm">
-              <a
-                href={company.websiteUrl}
-                rel="nofollow noopener"
-                target="_blank"
-                className="text-blue-700 hover:underline"
-              >
-                {t("website")}
-              </a>
-            </p>
-          )}
+          <CompanyInfoBlock company={company} />
         </div>
       </header>
 

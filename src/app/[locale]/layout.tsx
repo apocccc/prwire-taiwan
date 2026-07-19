@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
+import { HeaderAuthNav } from "@/components/HeaderAuthNav";
 import { getSiteSettings } from "@/lib/site-settings";
 import { siteConfig, type Locale } from "../../../config/site";
 import "../globals.css";
@@ -44,6 +45,7 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   const t = await getTranslations("nav");
+  const tCommon = await getTranslations("common");
   const tFooter = await getTranslations("footer");
   const l = locale as Locale;
   const settings = await getSiteSettings();
@@ -68,24 +70,17 @@ export default async function LocaleLayout({
                 aria-label="Global"
                 className="flex flex-wrap items-center justify-end gap-2 sm:gap-3"
               >
-                <Link
-                  href="/register/publisher"
-                  className="rounded bg-[#d51f1a] px-3 py-2 text-xs font-semibold text-white hover:bg-[#b3160f] sm:text-sm"
-                >
-                  {t("freeDistribute")}
-                </Link>
-                <Link
-                  href="/login"
-                  className="rounded border border-gray-300 px-3 py-2 text-xs font-medium text-gray-700 hover:border-[#d51f1a] hover:text-[#d51f1a] sm:text-sm"
-                >
-                  {t("companyLogin")}
-                </Link>
-                <Link
-                  href="/login"
-                  className="rounded border border-gray-300 px-3 py-2 text-xs font-medium text-gray-700 hover:border-[#d51f1a] hover:text-[#d51f1a] sm:text-sm"
-                >
-                  {t("mediaLogin")}
-                </Link>
+                <HeaderAuthNav
+                  locale={locale}
+                  labels={{
+                    freeDistribute: t("freeDistribute"),
+                    companyLogin: t("companyLogin"),
+                    mediaLogin: t("mediaLogin"),
+                    dashboard: t("dashboard"),
+                    mediaRoom: t("mediaRoom"),
+                    logout: tCommon("logout"),
+                  }}
+                />
                 <LocaleSwitcher />
               </nav>
             </div>

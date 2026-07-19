@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { CompanyInfoBlock } from "@/components/CompanyInfoBlock";
 import { ViewBeacon } from "@/components/ViewBeacon";
 import { JsonLd, newsArticleJsonLd } from "@/lib/jsonld";
 import { buildMetadata, truncateDescription } from "@/lib/seo";
@@ -223,6 +224,7 @@ export default async function ArticlePage({
               {pick(l, release.company.descriptionZh, release.company.descriptionEn)}
             </p>
           )}
+          <CompanyInfoBlock company={release.company} />
         </aside>
       </article>
       <ViewBeacon releaseId={release.id} />

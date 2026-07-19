@@ -97,8 +97,40 @@
     "descriptionZh": "Company description (Traditional Chinese)",
     "descriptionEn": "Company description (English)",
     "websiteUrl": "Company website",
+    "basicInfo": "Company basic information",
+    "basicInfoNote": "Shown together with your press releases on the article and company pages.",
+    "address": "Address",
+    "representativeName": "Representative name",
+    "capital": "Capital",
+    "capitalPlaceholder": "e.g. NT$ 10,000,000",
+    "sns": "Social links",
     "uploadFailed": "Upload failed",
     "saveFailed": "Save failed. Please try again."
+  },
+  "account": {
+    "sectionNote": "Update your sign-in information. Changing your registered email requires verification by code.",
+    "name": "Display name",
+    "email": "Registered email",
+    "currentEmail": "Current email",
+    "emailChangeNote": "For account security, changing your email sends a verification code; the change takes effect only after it is verified.",
+    "newEmail": "New email",
+    "sendCode": "Send code",
+    "codeSent": "A verification code has been sent. Please enter it below.",
+    "devCodeNote": "(Dev) verification code",
+    "enterCode": "Enter code",
+    "confirmChange": "Confirm change",
+    "emailChanged": "Your email has been updated.",
+    "emailTaken": "This email is already in use.",
+    "sameEmail": "This is the same as your current email.",
+    "codeInvalid": "Incorrect code.",
+    "codeExpired": "The code has expired. Please resend.",
+    "saveFailed": "Save failed. Please try again."
+  },
+  "companyInfo": {
+    "representative": "Representative",
+    "capital": "Capital",
+    "address": "Address",
+    "website": "Website"
   },
   "article": {
     "publishedAt": "Published",
@@ -151,7 +183,21 @@
       "UNPUBLISHED": "Unpublished"
     },
     "reviewNote": "Rejection reason",
-    "companyProfile": "Company Profile"
+    "companyProfile": "Company Profile",
+    "analytics": "Analytics",
+    "settings": "Settings",
+    "accountSettings": "Account Settings",
+    "mediaActivity": "Media Activity",
+    "mediaActivityNote": "A record of media requesting disclosure of your press contact and media-only information.",
+    "mediaActivityEmpty": "No disclosure requests from media yet.",
+    "requestedAt": "Requested",
+    "mediaOutlet": "Outlet",
+    "aboutRelease": "Release",
+    "publishedAt": "Published",
+    "totalReleases": "Total releases",
+    "publishedCount": "Published",
+    "totalViews": "Total views",
+    "viewsByRelease": "Views by release"
   },
   "editor": {
     "newTitle": "New Press Release",

@@ -97,8 +97,40 @@
     "descriptionZh": "公司簡介（繁體中文）",
     "descriptionEn": "公司簡介（英文）",
     "websiteUrl": "公司網站",
+    "basicInfo": "公司基本資訊",
+    "basicInfoNote": "將與新聞稿一併顯示於文章頁與企業頁。",
+    "address": "地址",
+    "representativeName": "代表人姓名",
+    "capital": "資本額",
+    "capitalPlaceholder": "例：NT$ 10,000,000",
+    "sns": "社群連結",
     "uploadFailed": "上傳失敗",
     "saveFailed": "儲存失敗，請稍後再試"
+  },
+  "account": {
+    "sectionNote": "變更登入資訊。變更登記電子郵件需先通過認證碼驗證。",
+    "name": "顯示名稱",
+    "email": "登記電子郵件",
+    "currentEmail": "目前的電子郵件",
+    "emailChangeNote": "為保護帳號安全，變更電子郵件時會寄送認證碼，驗證後才會生效。",
+    "newEmail": "新的電子郵件",
+    "sendCode": "寄送認證碼",
+    "codeSent": "已寄送認證碼，請查收並輸入。",
+    "devCodeNote": "（開發環境）認證碼",
+    "enterCode": "輸入認證碼",
+    "confirmChange": "確認變更",
+    "emailChanged": "電子郵件已更新。",
+    "emailTaken": "此電子郵件已被使用。",
+    "sameEmail": "與目前的電子郵件相同。",
+    "codeInvalid": "認證碼錯誤。",
+    "codeExpired": "認證碼已過期，請重新寄送。",
+    "saveFailed": "儲存失敗，請稍後再試。"
+  },
+  "companyInfo": {
+    "representative": "代表人",
+    "capital": "資本額",
+    "address": "地址",
+    "website": "官方網站"
   },
   "article": {
     "publishedAt": "發布日期",
@@ -151,7 +183,21 @@
       "UNPUBLISHED": "已下架"
     },
     "reviewNote": "退回原因",
-    "companyProfile": "公司資料"
+    "companyProfile": "公司資料",
+    "analytics": "成效分析",
+    "settings": "設定",
+    "accountSettings": "帳號設定",
+    "mediaActivity": "媒體動態",
+    "mediaActivityNote": "媒體申請開示您聯絡資訊・媒體限定資訊的紀錄。",
+    "mediaActivityEmpty": "目前沒有媒體的開示請求。",
+    "requestedAt": "請求時間",
+    "mediaOutlet": "媒體",
+    "aboutRelease": "對象新聞稿",
+    "publishedAt": "發布日期",
+    "totalReleases": "新聞稿總數",
+    "publishedCount": "已發布",
+    "totalViews": "總瀏覽數",
+    "viewsByRelease": "各新聞稿瀏覽數"
   },
   "editor": {
     "newTitle": "建立新聞稿",

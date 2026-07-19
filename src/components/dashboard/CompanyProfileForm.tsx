@@ -13,6 +13,15 @@ export interface CompanyProfile {
   descriptionEn: string | null;
   websiteUrl: string | null;
   logoUrl: string | null;
+  address: string | null;
+  representativeName: string | null;
+  capital: string | null;
+  snsX: string | null;
+  snsFacebook: string | null;
+  snsInstagram: string | null;
+  snsLine: string | null;
+  snsYoutube: string | null;
+  snsLinkedin: string | null;
 }
 
 export function CompanyProfileForm({ initial }: { initial: CompanyProfile }) {
@@ -29,6 +38,15 @@ export function CompanyProfileForm({ initial }: { initial: CompanyProfile }) {
     descriptionEn: initial.descriptionEn ?? "",
     websiteUrl: initial.websiteUrl ?? "",
     logoUrl: initial.logoUrl ?? "",
+    address: initial.address ?? "",
+    representativeName: initial.representativeName ?? "",
+    capital: initial.capital ?? "",
+    snsX: initial.snsX ?? "",
+    snsFacebook: initial.snsFacebook ?? "",
+    snsInstagram: initial.snsInstagram ?? "",
+    snsLine: initial.snsLine ?? "",
+    snsYoutube: initial.snsYoutube ?? "",
+    snsLinkedin: initial.snsLinkedin ?? "",
   });
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -67,6 +85,15 @@ export function CompanyProfileForm({ initial }: { initial: CompanyProfile }) {
         descriptionEn: form.descriptionEn || null,
         websiteUrl: form.websiteUrl || "",
         logoUrl: form.logoUrl || null,
+        address: form.address || null,
+        representativeName: form.representativeName || null,
+        capital: form.capital || null,
+        snsX: form.snsX || "",
+        snsFacebook: form.snsFacebook || "",
+        snsInstagram: form.snsInstagram || "",
+        snsLine: form.snsLine || "",
+        snsYoutube: form.snsYoutube || "",
+        snsLinkedin: form.snsLinkedin || "",
       }),
     });
     setSaving(false);
@@ -137,6 +164,52 @@ export function CompanyProfileForm({ initial }: { initial: CompanyProfile }) {
       <div>
         <label className={labelCls}>{t("websiteUrl")}</label>
         <input type="url" value={form.websiteUrl} onChange={(e) => set("websiteUrl", e.target.value)} className={inputCls} />
+      </div>
+
+      {/* 会社基本情報（プレスリリースと合わせて掲載） */}
+      <div className="rounded border border-gray-200 p-4">
+        <h2 className="font-semibold">{t("basicInfo")}</h2>
+        <p className="mt-1 text-xs text-gray-500">{t("basicInfoNote")}</p>
+        <div className="mt-3 space-y-4">
+          <div>
+            <label className={labelCls}>{t("address")}</label>
+            <input type="text" value={form.address} onChange={(e) => set("address", e.target.value)} className={inputCls} />
+          </div>
+          <div>
+            <label className={labelCls}>{t("representativeName")}</label>
+            <input type="text" value={form.representativeName} onChange={(e) => set("representativeName", e.target.value)} className={inputCls} />
+          </div>
+          <div>
+            <label className={labelCls}>{t("capital")}</label>
+            <input type="text" value={form.capital} onChange={(e) => set("capital", e.target.value)} className={inputCls} placeholder={t("capitalPlaceholder")} />
+          </div>
+        </div>
+      </div>
+
+      {/* SNS リンク */}
+      <div className="rounded border border-gray-200 p-4">
+        <h2 className="font-semibold">{t("sns")}</h2>
+        <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {([
+            ["snsX", "X"],
+            ["snsFacebook", "Facebook"],
+            ["snsInstagram", "Instagram"],
+            ["snsLine", "LINE"],
+            ["snsYoutube", "YouTube"],
+            ["snsLinkedin", "LinkedIn"],
+          ] as const).map(([key, label]) => (
+            <div key={key}>
+              <label className={labelCls}>{label}</label>
+              <input
+                type="url"
+                value={form[key]}
+                onChange={(e) => set(key, e.target.value)}
+                className={inputCls}
+                placeholder="https://"
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="flex items-center gap-3">

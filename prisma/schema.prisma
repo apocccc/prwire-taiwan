@@ -33,6 +33,10 @@ model User {
   name            String?
   // 利用規約（事例利用許諾・メディア一覧公開・ダイレクト送付）への同意日時
   termsAcceptedAt DateTime?
+  // 登録メールアドレス変更用（認証コード確認を経てから email を更新する）
+  pendingEmail       String?
+  emailChangeCode    String? // 6桁コードの bcrypt ハッシュ
+  emailChangeExpires DateTime?
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
 
@@ -54,6 +58,18 @@ model Company {
   descriptionZh String?
   descriptionEn String?
   websiteUrl    String?
+
+  // プレスリリースと合わせて掲載する会社基本情報
+  address            String? // 住所
+  representativeName String? // 代表者名
+  capital            String? // 資本金（通貨・桁が多様なため文字列で保持）
+  snsX               String?
+  snsFacebook        String?
+  snsInstagram       String?
+  snsLine            String?
+  snsYoutube         String?
+  snsLinkedin        String?
+
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
