@@ -10,7 +10,7 @@ export const PER_PAGE = 12;
  * 入稿は単一言語（既定は繁体中文）のため、いずれかの言語のタイトルがあれば
  * 全ロケールの一覧に表示し、表示側は pick() で存在する言語にフォールバックする。
  */
-function publishedWhere(_locale: Locale): Prisma.PressReleaseWhereInput {
+function publishedWhere(): Prisma.PressReleaseWhereInput {
   return {
     // SCHEDULED は公開時刻を過ぎた時点で公開扱い（ISR再生成時に反映）
     status: { in: ["PUBLISHED", "SCHEDULED"] },
@@ -41,8 +41,8 @@ export type ReleaseListItem = Prisma.PressReleaseGetPayload<{
   select: typeof listSelect;
 }>;
 
-export async function getLatestReleases(locale: Locale, page = 1) {
-  const where = publishedWhere(locale);
+export async function getLatestReleases(page = 1) {
+  const where = publishedWhere();
   const [items, total] = await Promise.all([
     prisma.pressRelease.findMany({
       where,
@@ -61,11 +61,10 @@ export async function getLatestReleases(locale: Locale, page = 1) {
  * period: "all"=全期間 / "month"=直近30日公開 / "week"=直近7日公開 の中でPV降順。
  */
 export async function getTopByViews(
-  locale: Locale,
   limit = 6,
   period: "all" | "month" | "week" = "all"
 ) {
-  const where: Prisma.PressReleaseWhereInput = { ...publishedWhere(locale) };
+  const where: Prisma.PressReleaseWhereInput = { ...publishedWhere() };
   if (period !== "all") {
     const days = period === "week" ? 7 : 30;
     where.publishedAt = {
@@ -89,6 +88,7 @@ export async function getReleaseBySlug(slug: string) {
       images: { orderBy: { sortOrder: "asc" } },
       categories: { include: { category: true } },
       mediaOnlyInfo: { select: { releaseId: true } },
+      _count: { select: { mediaKitFiles: true } },
     },
   });
 }
@@ -102,6 +102,7 @@ export async function getReleaseBySeqs(releaseSeq: number, companySeq: number) {
       images: { orderBy: { sortOrder: "asc" } },
       categories: { include: { category: true } },
       mediaOnlyInfo: { select: { releaseId: true } },
+      _count: { select: { mediaKitFiles: true } },
     },
   });
   // 会社seqが一致しない場合は不正なURLとして扱う
@@ -117,13 +118,9 @@ export async function getCategoryBySlug(slug: string) {
   return prisma.category.findUnique({ where: { slug } });
 }
 
-export async function getReleasesByCategory(
-  categoryId: string,
-  locale: Locale,
-  page = 1
-) {
+export async function getReleasesByCategory(categoryId: string, page = 1) {
   const where: Prisma.PressReleaseWhereInput = {
-    ...publishedWhere(locale),
+    ...publishedWhere(),
     categories: { some: { categoryId } },
   };
   const [items, total] = await Promise.all([
@@ -143,13 +140,9 @@ export async function getCompanyBySlug(slug: string) {
   return prisma.company.findUnique({ where: { slug } });
 }
 
-export async function getReleasesByCompany(
-  companyId: string,
-  locale: Locale,
-  page = 1
-) {
+export async function getReleasesByCompany(companyId: string, page = 1) {
   const where: Prisma.PressReleaseWhereInput = {
-    ...publishedWhere(locale),
+    ...publishedWhere(),
     companyId,
   };
   const [items, total] = await Promise.all([
@@ -181,7 +174,7 @@ export async function getPublicMediaOutlets() {
 
 export async function searchReleases(q: string, locale: Locale, page = 1) {
   const where: Prisma.PressReleaseWhereInput = {
-    ...publishedWhere(locale),
+    ...publishedWhere(),
     OR:
       locale === "zh"
         ? [

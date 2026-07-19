@@ -46,8 +46,8 @@ export default async function HomePage({
   const tNews = await getTranslations("news");
 
   const [ranking, latestResult, categories] = await Promise.all([
-    getTopByViews(l, 6, period),
-    getLatestReleases(l, 1),
+    getTopByViews(6, period),
+    getLatestReleases(1),
     getCategories(),
   ]);
 

@@ -52,7 +52,7 @@ export default async function CompanyPagedPage({
   const t = await getTranslations("company");
   const tNav = await getTranslations("nav");
   const tNews = await getTranslations("news");
-  const { items, totalPages } = await getReleasesByCompany(company.id, l, n);
+  const { items, totalPages } = await getReleasesByCompany(company.id, n);
   if (items.length === 0) notFound();
 
   const name = pick(l, company.nameZh, company.nameEn);

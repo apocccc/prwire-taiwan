@@ -34,6 +34,10 @@ export async function POST(
       pressContactEmail: true,
       pressContactPhone: true,
       mediaOnlyInfo: { select: { content: true } },
+      mediaKitFiles: {
+        orderBy: { createdAt: "asc" },
+        select: { id: true, fileName: true, fileSize: true },
+      },
     },
   });
   if (!release || !["PUBLISHED", "SCHEDULED"].includes(release.status)) {
@@ -57,5 +61,6 @@ export async function POST(
       phone: release.pressContactPhone,
     },
     mediaOnlyInfo: release.mediaOnlyInfo?.content ?? null,
+    mediaKitFiles: release.mediaKitFiles,
   });
 }

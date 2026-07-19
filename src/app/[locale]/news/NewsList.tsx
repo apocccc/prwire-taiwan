@@ -9,7 +9,7 @@ import type { Locale } from "../../../../config/site";
 export async function NewsList({ locale, page }: { locale: Locale; page: number }) {
   const t = await getTranslations("news");
   const tNav = await getTranslations("nav");
-  const { items, totalPages } = await getLatestReleases(locale, page);
+  const { items, totalPages } = await getLatestReleases(page);
 
   if (page > 1 && items.length === 0) notFound();
 

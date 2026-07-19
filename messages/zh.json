@@ -141,6 +141,12 @@
     "moreFromCompany": "此企業的其他新聞稿",
     "notFound": "找不到此新聞稿"
   },
+  "engage": {
+    "favorite": "加入收藏",
+    "favorited": "已收藏",
+    "follow": "追蹤企業",
+    "following": "追蹤中"
+  },
   "mediaDetail": {
     "viewDetail": "查看媒體詳情",
     "title": "媒體詳細資訊",
@@ -159,6 +165,8 @@
     "note": "以下資訊僅供媒體參考，於文章中以馬賽克顯示。登入媒體帳號並按下「開示」後即可閱覽，且會通知發布者是哪家媒體提出請求。",
     "contactHeading": "採訪聯絡窗口（撰稿企業窗口）",
     "mediaInfoHeading": "本則新聞稿的媒體專用補充資訊",
+    "mediaKitHeading": "媒體資料袋",
+    "download": "下載",
     "disclose": "開示",
     "revealing": "開示中…",
     "mediaOnlyPrompt": "此資訊僅開放給已登入的媒體帳號。",
@@ -361,7 +369,22 @@
     "followDesc": "追蹤有興趣的分類，即可在每週摘要信中收到新發布的新聞稿。",
     "following": "追蹤中",
     "follow": "追蹤",
-    "viewPublic": "檢視公開頁面"
+    "viewPublic": "檢視公開頁面",
+    "favorites": "我的收藏",
+    "favoritesEmpty": "尚未收藏任何新聞稿。",
+    "followingCompanies": "追蹤中的企業",
+    "followingEmpty": "尚未追蹤任何企業。",
+    "settings": "設定",
+    "accountSettings": "帳號設定",
+    "remove": "移除",
+    "unfollow": "取消追蹤",
+    "latestLabel": "最新",
+    "noReleasesYet": "尚無新聞稿"
+  },
+  "mediaOutletForm": {
+    "title": "媒體登錄資訊",
+    "note": "您在註冊時填寫的媒體與聯絡資訊。開示時會提供給發布者。",
+    "saveFailed": "儲存失敗，請稍後再試。"
   },
   "terms": {
     "title": "服務條款",

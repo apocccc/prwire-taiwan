@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CompanyInfoBlock } from "@/components/CompanyInfoBlock";
+import { FollowButton } from "@/components/FollowButton";
 import { ReleaseGrid } from "@/components/ReleaseCard";
 import { Pagination } from "@/components/Pagination";
 import { JsonLd, organizationJsonLd } from "@/lib/jsonld";
@@ -51,7 +52,7 @@ export default async function CompanyPage({
   const t = await getTranslations("company");
   const tNav = await getTranslations("nav");
   const tNews = await getTranslations("news");
-  const { items, totalPages } = await getReleasesByCompany(company.id, l, 1);
+  const { items, totalPages } = await getReleasesByCompany(company.id, 1);
 
   const name = pick(l, company.nameZh, company.nameEn);
   const description = pick(l, company.descriptionZh, company.descriptionEn);
@@ -85,6 +86,9 @@ export default async function CompanyPage({
         <div>
           <h1 className="text-2xl font-bold">{name}</h1>
           {description && <p className="mt-2 text-gray-600">{description}</p>}
+          <div className="mt-3">
+            <FollowButton companyId={company.id} />
+          </div>
           <CompanyInfoBlock company={company} />
         </div>
       </header>

@@ -9,11 +9,19 @@ interface PressContact {
   phone: string | null;
 }
 
+interface MediaKitFile {
+  id: string;
+  fileName: string;
+  fileSize: number;
+}
+
 interface Labels {
   title: string;
   note: string;
   contactHeading: string;
   mediaInfoHeading: string;
+  mediaKitHeading: string;
+  download: string;
   disclose: string;
   revealing: string;
   mediaOnlyPrompt: string;
@@ -35,12 +43,14 @@ export function DisclosurePanel({
   releaseId,
   hasPressContact,
   hasMediaOnlyInfo,
+  hasMediaKit,
   loginHref,
   labels,
 }: {
   releaseId: string;
   hasPressContact: boolean;
   hasMediaOnlyInfo: boolean;
+  hasMediaKit: boolean;
   loginHref: string;
   labels: Labels;
 }) {
@@ -50,6 +60,7 @@ export function DisclosurePanel({
   const [revealed, setRevealed] = useState<{
     pressContact: PressContact | null;
     mediaOnlyInfo: string | null;
+    mediaKitFiles: MediaKitFile[];
   } | null>(null);
 
   useEffect(() => {
@@ -117,6 +128,36 @@ export function DisclosurePanel({
               </p>
             ) : (
               <MosaicLines lines={4} />
+            )}
+          </div>
+        )}
+
+        {hasMediaKit && (
+          <div className="rounded border border-gray-200 bg-white p-4">
+            <h3 className="text-sm font-semibold text-gray-700">
+              {labels.mediaKitHeading}
+            </h3>
+            {opened && revealed?.mediaKitFiles?.length ? (
+              <ul className="mt-2 space-y-2 text-sm">
+                {revealed.mediaKitFiles.map((f) => (
+                  <li key={f.id} className="flex items-center justify-between gap-3">
+                    <span>
+                      {f.fileName}
+                      <span className="ml-2 text-xs text-gray-400">
+                        {(f.fileSize / 1024 / 1024).toFixed(1)}MB
+                      </span>
+                    </span>
+                    <a
+                      href={`/api/media-kit/${f.id}`}
+                      className="rounded bg-gray-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-gray-700"
+                    >
+                      {labels.download}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <MosaicLines lines={2} />
             )}
           </div>
         )}

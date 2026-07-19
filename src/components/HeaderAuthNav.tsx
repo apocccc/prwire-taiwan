@@ -47,9 +47,12 @@ export function HeaderAuthNav({ locale, labels }: { locale: string; labels: Labe
     const isMedia = user.role === "MEDIA";
     return (
       <>
-        <Link href={isMedia ? "/media-room" : "/dashboard"} className={linkCls}>
-          {isMedia ? labels.mediaRoom : labels.dashboard}
-        </Link>
+        {/* メディアはログアウトのみ（言語切替は親が表示）。事業者/管理者は後台リンクも表示 */}
+        {!isMedia && (
+          <Link href="/dashboard" className={linkCls}>
+            {labels.dashboard}
+          </Link>
+        )}
         <button
           type="button"
           onClick={() => signOut({ callbackUrl: `/${locale}` })}

@@ -3,11 +3,11 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { prisma } from "@/lib/prisma";
 import { requireRole } from "@/lib/require-role";
-import { SignOutButton } from "@/components/SignOutButton";
 import { formatTaipeiDate } from "@/lib/dates";
+import { articlePath } from "@/lib/article-url";
 import { pick } from "@/lib/l10n";
 import { toggleCategoryFollow } from "./actions";
-import type { Locale } from "../../../../config/site";
+import type { Locale } from "../../../../../config/site";
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return { robots: { index: false } };
 }
 
-/** メディア専区: 新着リリース一覧（限定情報の有無つき）+ カテゴリフォロー */
+/** メディア専区: 新着リリース一覧 + カテゴリフォロー。記事は通常の記事ページへ遷移する。 */
 export default async function MediaRoomPage({
   params,
 }: {
@@ -34,11 +34,11 @@ export default async function MediaRoomPage({
       },
       select: {
         id: true,
-        slug: true,
+        seq: true,
         titleZh: true,
         titleEn: true,
         publishedAt: true,
-        company: { select: { nameZh: true, nameEn: true } },
+        company: { select: { seq: true, nameZh: true, nameEn: true } },
         mediaOnlyInfo: { select: { releaseId: true } },
         _count: { select: { mediaKitFiles: true } },
       },
@@ -57,14 +57,9 @@ export default async function MediaRoomPage({
   const followed = new Set(outlet?.categoryFollows.map((f) => f.categoryId) ?? []);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-bold">{t("title")}</h1>
-        <SignOutButton locale={locale} />
-      </div>
-
+    <div>
       {session.user.role === "MEDIA" && (
-        <section className="mt-8 rounded-lg border border-gray-200 p-5">
+        <section className="rounded-lg border border-gray-200 p-5">
           <h2 className="font-semibold">{t("followCategories")}</h2>
           <p className="mt-1 text-sm text-gray-500">{t("followDesc")}</p>
           <div className="mt-3 flex flex-wrap gap-2">
@@ -96,7 +91,7 @@ export default async function MediaRoomPage({
                 <tr key={r.id} className="border-b border-gray-200">
                   <td className="py-3 pr-4">
                     <Link
-                      href={`/media-room/releases/${r.id}`}
+                      href={articlePath(r)}
                       className="font-medium text-blue-700 hover:underline"
                     >
                       {r.titleZh || r.titleEn || "(untitled)"}

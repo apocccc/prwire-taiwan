@@ -141,6 +141,12 @@
     "moreFromCompany": "More from this company",
     "notFound": "Press release not found"
   },
+  "engage": {
+    "favorite": "Save",
+    "favorited": "Saved",
+    "follow": "Follow",
+    "following": "Following"
+  },
   "mediaDetail": {
     "viewDetail": "View media details",
     "title": "Media details",
@@ -159,6 +165,8 @@
     "note": "The information below is for media and is shown blurred in the article. Log in with a media account and press \"Reveal\" to view it; the publisher is notified which outlet requested it.",
     "contactHeading": "Press contact (author company)",
     "mediaInfoHeading": "Media-only notes for this release",
+    "mediaKitHeading": "Media kit",
+    "download": "Download",
     "disclose": "Reveal",
     "revealing": "Revealing…",
     "mediaOnlyPrompt": "This information is available to logged-in media accounts only.",
@@ -361,7 +369,22 @@
     "followDesc": "Follow categories to receive new releases in a weekly digest email.",
     "following": "Following",
     "follow": "Follow",
-    "viewPublic": "View public page"
+    "viewPublic": "View public page",
+    "favorites": "My Saved",
+    "favoritesEmpty": "You haven't saved any press releases yet.",
+    "followingCompanies": "Companies You Follow",
+    "followingEmpty": "You aren't following any companies yet.",
+    "settings": "Settings",
+    "accountSettings": "Account Settings",
+    "remove": "Remove",
+    "unfollow": "Unfollow",
+    "latestLabel": "Latest",
+    "noReleasesYet": "No releases yet"
+  },
+  "mediaOutletForm": {
+    "title": "Media Registration Info",
+    "note": "The outlet and contact details you provided at signup. These are shared with publishers upon disclosure.",
+    "saveFailed": "Save failed. Please try again."
   },
   "terms": {
     "title": "Terms of Service",

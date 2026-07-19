@@ -6,6 +6,8 @@ import { Link } from "@/i18n/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CompanyInfoBlock } from "@/components/CompanyInfoBlock";
 import { DisclosurePanel } from "@/components/DisclosurePanel";
+import { FavoriteButton } from "@/components/FavoriteButton";
+import { FollowButton } from "@/components/FollowButton";
 import { ViewBeacon } from "@/components/ViewBeacon";
 import { JsonLd, newsArticleJsonLd } from "@/lib/jsonld";
 import { buildMetadata, truncateDescription } from "@/lib/seo";
@@ -111,6 +113,7 @@ export default async function ArticlePage({
       release.pressContactPhone
   );
   const hasMediaOnlyInfo = Boolean(release.mediaOnlyInfo);
+  const hasMediaKit = release._count.mediaKitFiles > 0;
 
   const title = pick(l, release.titleZh, release.titleEn)!;
   const subtitle = pick(l, release.subtitleZh, release.subtitleEn);
@@ -174,6 +177,10 @@ export default async function ArticlePage({
             <time dateTime={release.publishedAt!.toISOString()}>
               {formatTaipei(release.publishedAt!, l)}
             </time>
+          </div>
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            <FavoriteButton releaseId={release.id} />
+            <FollowButton companyId={release.company.id} />
           </div>
         </header>
 
@@ -239,17 +246,20 @@ export default async function ArticlePage({
           <CompanyInfoBlock company={release.company} />
         </aside>
 
-        {(hasPressContact || hasMediaOnlyInfo) && (
+        {(hasPressContact || hasMediaOnlyInfo || hasMediaKit) && (
           <DisclosurePanel
             releaseId={release.id}
             hasPressContact={hasPressContact}
             hasMediaOnlyInfo={hasMediaOnlyInfo}
+            hasMediaKit={hasMediaKit}
             loginHref={`/${l}/login`}
             labels={{
               title: tDisc("title"),
               note: tDisc("note"),
               contactHeading: tDisc("contactHeading"),
               mediaInfoHeading: tDisc("mediaInfoHeading"),
+              mediaKitHeading: tDisc("mediaKitHeading"),
+              download: tDisc("download"),
               disclose: tDisc("disclose"),
               revealing: tDisc("revealing"),
               mediaOnlyPrompt: tDisc("mediaOnlyPrompt"),

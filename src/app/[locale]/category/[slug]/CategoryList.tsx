@@ -22,7 +22,7 @@ export async function CategoryList({
   const t = await getTranslations("category");
   const tNav = await getTranslations("nav");
   const tNews = await getTranslations("news");
-  const { items, totalPages } = await getReleasesByCategory(category.id, locale, page);
+  const { items, totalPages } = await getReleasesByCategory(category.id, page);
   if (page > 1 && items.length === 0) notFound();
 
   const name = pick(locale, category.nameZh, category.nameEn);

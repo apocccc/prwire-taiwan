@@ -20,13 +20,17 @@ export function DashboardSidebar({
   // pathname は /{locale}/dashboard/... を含むため locale プレフィックスを除去して比較
   const stripped = pathname.replace(new RegExp(`^/${locale}`), "") || "/";
 
+  // 現在地に一致する最長プレフィックスの項目のみをアクティブにする
+  const activeHref = items
+    .filter(
+      (item) => stripped === item.href || stripped.startsWith(item.href + "/")
+    )
+    .sort((a, b) => b.href.length - a.href.length)[0]?.href;
+
   return (
     <nav aria-label="Dashboard" className="space-y-1">
       {items.map((item) => {
-        const active =
-          item.href === "/dashboard"
-            ? stripped === "/dashboard"
-            : stripped.startsWith(item.href);
+        const active = item.href === activeHref;
         return (
           <Link
             key={item.href}
