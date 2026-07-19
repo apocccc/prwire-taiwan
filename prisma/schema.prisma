@@ -227,7 +227,7 @@ model MediaKitFile {
 
 model SiteSetting {
   id             Int      @id @default(1)
-  reviewRequired Boolean  @default(true) // 審査フローON/OFF
+  reviewRequired Boolean  @default(false) // 審査フローON/OFF（既定OFF＝レビューなしで即配信）
   serviceNameZh  String?
   serviceNameEn  String?
   logoUrl        String?

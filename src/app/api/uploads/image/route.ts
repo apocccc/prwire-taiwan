@@ -11,6 +11,7 @@ const ALLOWED_TYPES: Record<string, string> = {
   "image/png": ".png",
   "image/webp": ".webp",
   "image/gif": ".gif",
+  "image/svg+xml": ".svg",
 };
 
 export async function POST(request: Request) {

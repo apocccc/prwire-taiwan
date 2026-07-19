@@ -60,6 +60,12 @@ export default async function DashboardPage({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-bold">{t("title")}</h1>
         <div className="flex items-center gap-3">
+          <a
+            href={`/${locale}/dashboard/company`}
+            className="rounded border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50"
+          >
+            {t("companyProfile")}
+          </a>
           <NewReleaseButton locale={locale} />
           <SignOutButton locale={locale} />
         </div>

@@ -16,6 +16,10 @@ body {
 .prose-body p {
   margin: 1.1em 0;
 }
+/* エディター内は Enter(段落) と Shift+Enter(改行) の行間を同一にする */
+.prose-body.editor-content p {
+  margin: 0;
+}
 .prose-body h2 {
   margin: 1.8em 0 0.7em;
   font-size: 1.4rem;

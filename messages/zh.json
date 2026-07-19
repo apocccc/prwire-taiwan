@@ -87,6 +87,19 @@
     "empty": "目前沒有新聞稿",
     "pageN": "第 {page} 頁"
   },
+  "companyProfile": {
+    "title": "公司資料",
+    "logo": "公司標誌（Logo）",
+    "uploadLogo": "上傳標誌",
+    "logoNote": "建議正方形、PNG／SVG。將顯示於企業頁面。",
+    "nameZh": "公司名稱（繁體中文）",
+    "nameEn": "公司名稱（英文）",
+    "descriptionZh": "公司簡介（繁體中文）",
+    "descriptionEn": "公司簡介（英文）",
+    "websiteUrl": "公司網站",
+    "uploadFailed": "上傳失敗",
+    "saveFailed": "儲存失敗，請稍後再試"
+  },
   "article": {
     "publishedAt": "發布日期",
     "categoriesLabel": "分類",
@@ -137,7 +150,8 @@
       "PUBLISHED": "已發布",
       "UNPUBLISHED": "已下架"
     },
-    "reviewNote": "退回原因"
+    "reviewNote": "退回原因",
+    "companyProfile": "公司資料"
   },
   "editor": {
     "newTitle": "建立新聞稿",
@@ -235,8 +249,16 @@
     "approveUser": "核准",
     "suspendUser": "停權",
     "activateUser": "恢復",
-    "roleLabels": { "PUBLISHER": "企業", "MEDIA": "媒體", "ADMIN": "管理員" },
-    "statusLabels": { "PENDING": "待審核", "ACTIVE": "使用中", "SUSPENDED": "已停權" },
+    "roleLabels": {
+      "PUBLISHER": "企業",
+      "MEDIA": "媒體",
+      "ADMIN": "管理員"
+    },
+    "statusLabels": {
+      "PENDING": "待審核",
+      "ACTIVE": "使用中",
+      "SUSPENDED": "已停權"
+    },
     "categoryName_zh": "名稱（繁中）",
     "categoryName_en": "名稱（英文）",
     "categorySlug": "Slug",

@@ -52,7 +52,7 @@ async function main() {
   await prisma.siteSetting.upsert({
     where: { id: 1 },
     update: {},
-    create: { id: 1, reviewRequired: true },
+    create: { id: 1, reviewRequired: false },
   });
 
   // 開発用サンプルデータ（本番では SEED_SAMPLE_DATA=false で無効化）

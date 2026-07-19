@@ -94,6 +94,9 @@ export function ContentEditor({ initial }: { initial: ContentInitial }) {
     if (await save())
       router.push(`/${locale}/dashboard/releases/${initial.id}/settings`);
   }
+  async function saveAndExit() {
+    if (await save()) router.push(`/${locale}/dashboard`);
+  }
 
   const previewUrl = `/${locale}/dashboard/releases/${initial.id}/preview`;
 
@@ -132,7 +135,7 @@ export function ContentEditor({ initial }: { initial: ContentInitial }) {
           </button>
           <button
             type="button"
-            onClick={save}
+            onClick={saveAndExit}
             disabled={saving || !editable}
             className="rounded bg-blue-900 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-800 disabled:opacity-50"
           >

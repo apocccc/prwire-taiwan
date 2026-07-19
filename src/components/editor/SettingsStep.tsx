@@ -103,6 +103,10 @@ export function SettingsStep({
     return true;
   }
 
+  async function saveAndExit() {
+    if (await save()) router.push(`/${locale}/dashboard`);
+  }
+
   async function distribute() {
     if (!window.confirm(t("submitConfirm"))) return;
     setSubmitting(true);
@@ -335,7 +339,7 @@ export function SettingsStep({
       {/* 配信 */}
       <section className="mt-8 border-t border-gray-200 pt-6">
         <div className="flex flex-wrap items-center gap-3">
-          <button type="button" onClick={save} disabled={saving || !editable}
+          <button type="button" onClick={saveAndExit} disabled={saving || !editable}
             className="rounded border border-gray-400 px-4 py-2 font-medium hover:bg-gray-50 disabled:opacity-50">
             {saving ? "..." : t("saveDraft")}
           </button>

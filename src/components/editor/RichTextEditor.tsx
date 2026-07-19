@@ -2,11 +2,8 @@
 
 import { useEditor, EditorContent, type JSONContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Table } from "@tiptap/extension-table";
-import { TableRow } from "@tiptap/extension-table-row";
-import { TableHeader } from "@tiptap/extension-table-header";
-import { TableCell } from "@tiptap/extension-table-cell";
-import { useRef } from "react";
+import { Underline } from "@tiptap/extension-underline";
+import { useRef, type ReactNode } from "react";
 import { CaptionedImage } from "./CaptionedImage";
 
 const MAX_BODY_IMAGES = 10;
@@ -29,7 +26,7 @@ function ToolbarButton({
 }: {
   onClick: () => void;
   active?: boolean;
-  label: string;
+  label: ReactNode;
   title: string;
 }) {
   return (
@@ -38,13 +35,18 @@ function ToolbarButton({
       onMouseDown={(e) => e.preventDefault()}
       onClick={onClick}
       title={title}
-      className={`rounded px-2 py-1 text-sm ${
-        active ? "bg-gray-900 text-white" : "bg-white text-gray-700 hover:bg-gray-100"
+      className={`rounded px-2 py-1 text-[15px] leading-none hover:text-[#d51f1a] ${
+        active ? "font-bold text-[#d51f1a]" : "text-gray-700"
       }`}
     >
       {label}
     </button>
   );
+}
+
+/** 枠なしツールバーの区切り線 */
+function ToolbarDivider() {
+  return <span className="mx-1.5 h-5 w-px bg-gray-200" aria-hidden="true" />;
 }
 
 export function RichTextEditor({
@@ -65,10 +67,7 @@ export function RichTextEditor({
         heading: { levels: [2, 3, 4] },
         link: { openOnClick: false },
       }),
-      Table.configure({ resizable: false }),
-      TableRow,
-      TableHeader,
-      TableCell,
+      Underline,
       CaptionedImage,
     ],
     content: initialContent ?? undefined,
@@ -78,7 +77,7 @@ export function RichTextEditor({
     editorProps: {
       attributes: {
         class:
-          "prose-body min-h-72 rounded-b border border-gray-300 bg-white px-4 py-3 focus:outline-none",
+          "prose-body editor-content min-h-72 bg-white px-1 py-4 focus:outline-none",
         "data-placeholder": placeholder ?? "",
       },
     },
@@ -131,48 +130,38 @@ export function RichTextEditor({
 
   return (
     <div>
-      <div className="flex flex-wrap items-center gap-1 rounded-t border border-b-0 border-gray-300 bg-gray-50 px-2 py-1.5">
-        <ToolbarButton title="見出し2" label="H2" active={editor.isActive("heading", { level: 2 })}
+      {/* 枠なしツールバー（下線のみ、参考デザイン準拠） */}
+      <div className="flex flex-wrap items-center gap-0.5 border-b border-gray-200 px-1 py-2">
+        <ToolbarButton title="見出し1" label="H1" active={editor.isActive("heading", { level: 2 })}
           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} />
-        <ToolbarButton title="見出し3" label="H3" active={editor.isActive("heading", { level: 3 })}
+        <ToolbarButton title="見出し2" label="H2" active={editor.isActive("heading", { level: 3 })}
           onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} />
-        <span className="mx-1 h-5 w-px bg-gray-300" />
+        <ToolbarButton title="見出し3" label="H3" active={editor.isActive("heading", { level: 4 })}
+          onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()} />
+        <ToolbarDivider />
         <ToolbarButton title="太字" label="B" active={editor.isActive("bold")}
           onClick={() => editor.chain().focus().toggleBold().run()} />
-        <ToolbarButton title="斜体" label="I" active={editor.isActive("italic")}
+        <ToolbarButton title="斜体" label={<span className="italic">I</span>} active={editor.isActive("italic")}
           onClick={() => editor.chain().focus().toggleItalic().run()} />
-        <ToolbarButton title="取り消し線" label="S" active={editor.isActive("strike")}
+        <ToolbarButton title="下線" label={<span className="underline">U</span>} active={editor.isActive("underline")}
+          onClick={() => editor.chain().focus().toggleUnderline().run()} />
+        <ToolbarButton title="取り消し線" label={<span className="line-through">S</span>} active={editor.isActive("strike")}
           onClick={() => editor.chain().focus().toggleStrike().run()} />
-        <span className="mx-1 h-5 w-px bg-gray-300" />
-        <ToolbarButton title="リンク" label="🔗" active={editor.isActive("link")} onClick={setLink} />
-        <ToolbarButton title="引用" label="❝" active={editor.isActive("blockquote")}
-          onClick={() => editor.chain().focus().toggleBlockquote().run()} />
-        <ToolbarButton title="箇条書き" label="•―" active={editor.isActive("bulletList")}
-          onClick={() => editor.chain().focus().toggleBulletList().run()} />
+        <ToolbarDivider />
         <ToolbarButton title="番号リスト" label="1." active={editor.isActive("orderedList")}
           onClick={() => editor.chain().focus().toggleOrderedList().run()} />
-        <span className="mx-1 h-5 w-px bg-gray-300" />
-        <ToolbarButton title="画像を挿入（キャプション必須）" label="🖼"
+        <ToolbarButton title="箇条書き" label="•" active={editor.isActive("bulletList")}
+          onClick={() => editor.chain().focus().toggleBulletList().run()} />
+        <ToolbarDivider />
+        <ToolbarButton title="引用" label="&ldquo;" active={editor.isActive("blockquote")}
+          onClick={() => editor.chain().focus().toggleBlockquote().run()} />
+        <ToolbarDivider />
+        <ToolbarButton title="リンク" label="Link" active={editor.isActive("link")} onClick={setLink} />
+        <ToolbarButton title="画像を挿入（キャプション必須）" label="IMG"
           onClick={() => fileInputRef.current?.click()} />
-        <ToolbarButton title="表を挿入" label="⊞"
-          onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()} />
-        {editor.isActive("table") && (
-          <>
-            <ToolbarButton title="行を追加" label="+行"
-              onClick={() => editor.chain().focus().addRowAfter().run()} />
-            <ToolbarButton title="列を追加" label="+列"
-              onClick={() => editor.chain().focus().addColumnAfter().run()} />
-            <ToolbarButton title="表を削除" label="⊟"
-              onClick={() => editor.chain().focus().deleteTable().run()} />
-          </>
-        )}
-        <ToolbarButton title="区切り線" label="―"
-          onClick={() => editor.chain().focus().setHorizontalRule().run()} />
-        <span className="mx-1 h-5 w-px bg-gray-300" />
-        <ToolbarButton title="元に戻す" label="↩"
-          onClick={() => editor.chain().focus().undo().run()} />
-        <ToolbarButton title="やり直す" label="↪"
-          onClick={() => editor.chain().focus().redo().run()} />
+        <ToolbarDivider />
+        <ToolbarButton title="書式をクリア" label="✕"
+          onClick={() => editor.chain().focus().unsetAllMarks().clearNodes().run()} />
       </div>
       <EditorContent editor={editor} />
       <input

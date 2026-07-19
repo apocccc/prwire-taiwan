@@ -87,6 +87,19 @@
     "empty": "No press releases yet",
     "pageN": "Page {page}"
   },
+  "companyProfile": {
+    "title": "Company Profile",
+    "logo": "Company Logo",
+    "uploadLogo": "Upload logo",
+    "logoNote": "Square PNG / SVG recommended. Shown on your company page.",
+    "nameZh": "Company name (Traditional Chinese)",
+    "nameEn": "Company name (English)",
+    "descriptionZh": "Company description (Traditional Chinese)",
+    "descriptionEn": "Company description (English)",
+    "websiteUrl": "Company website",
+    "uploadFailed": "Upload failed",
+    "saveFailed": "Save failed. Please try again."
+  },
   "article": {
     "publishedAt": "Published",
     "categoriesLabel": "Categories",
@@ -137,7 +150,8 @@
       "PUBLISHED": "Published",
       "UNPUBLISHED": "Unpublished"
     },
-    "reviewNote": "Rejection reason"
+    "reviewNote": "Rejection reason",
+    "companyProfile": "Company Profile"
   },
   "editor": {
     "newTitle": "New Press Release",
@@ -235,8 +249,16 @@
     "approveUser": "Approve",
     "suspendUser": "Suspend",
     "activateUser": "Reactivate",
-    "roleLabels": { "PUBLISHER": "Publisher", "MEDIA": "Media", "ADMIN": "Admin" },
-    "statusLabels": { "PENDING": "Pending", "ACTIVE": "Active", "SUSPENDED": "Suspended" },
+    "roleLabels": {
+      "PUBLISHER": "Publisher",
+      "MEDIA": "Media",
+      "ADMIN": "Admin"
+    },
+    "statusLabels": {
+      "PENDING": "Pending",
+      "ACTIVE": "Active",
+      "SUSPENDED": "Suspended"
+    },
     "categoryName_zh": "Name (zh-Hant)",
     "categoryName_en": "Name (English)",
     "categorySlug": "Slug",
