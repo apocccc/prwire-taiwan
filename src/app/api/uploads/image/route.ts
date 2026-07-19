@@ -45,6 +45,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid_image" }, { status: 400 });
   }
 
-  const { url } = await savePublicImage(buffer, file.name || ALLOWED_TYPES[file.type]);
+  const { url } = await savePublicImage(
+    buffer,
+    file.name || ALLOWED_TYPES[file.type],
+    file.type
+  );
   return NextResponse.json({ url, width, height }, { status: 201 });
 }

@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireApiRole } from "@/lib/api-auth";
+import { sendEmail, disclosureNotifyEmail } from "@/lib/email";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 /**
  * メディア限定情報の開示。
@@ -18,7 +21,7 @@ export async function POST(
 
   const outlet = await prisma.mediaOutlet.findUnique({
     where: { userId: session.user.id },
-    select: { id: true },
+    select: { id: true, outletName: true },
   });
   if (!outlet) {
     return NextResponse.json({ error: "no_outlet" }, { status: 403 });
@@ -29,10 +32,13 @@ export async function POST(
     select: {
       id: true,
       status: true,
+      titleZh: true,
+      titleEn: true,
       pressContactDept: true,
       pressContactName: true,
       pressContactEmail: true,
       pressContactPhone: true,
+      company: { select: { user: { select: { email: true } } } },
       mediaOnlyInfo: { select: { content: true } },
       mediaKitFiles: {
         orderBy: { createdAt: "asc" },
@@ -44,14 +50,28 @@ export async function POST(
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
 
-  // 開示請求を記録（同一メディア×同一リリースは1件に集約）
-  await prisma.disclosureRequest.upsert({
+  // 初回開示のみ記録メール送信（再開示ではスパムしない）
+  const existing = await prisma.disclosureRequest.findUnique({
     where: {
       releaseId_mediaOutletId: { releaseId: release.id, mediaOutletId: outlet.id },
     },
-    create: { releaseId: release.id, mediaOutletId: outlet.id },
-    update: {},
+    select: { id: true },
   });
+  if (!existing) {
+    await prisma.disclosureRequest.create({
+      data: { releaseId: release.id, mediaOutletId: outlet.id },
+    });
+    const publisherEmail = release.company.user.email;
+    if (publisherEmail) {
+      // ベストエフォート通知（失敗しても開示自体は成功扱い）
+      const mail = disclosureNotifyEmail({
+        outletName: outlet.outletName,
+        releaseTitle: release.titleZh || release.titleEn || "",
+        dashboardUrl: `${siteUrl}/zh/dashboard/media`,
+      });
+      void sendEmail({ to: publisherEmail, ...mail }).catch(() => {});
+    }
+  }
 
   return NextResponse.json({
     pressContact: {

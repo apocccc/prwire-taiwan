@@ -45,7 +45,7 @@ export async function POST(
   }
 
   const buffer = Buffer.from(await file.arrayBuffer());
-  const { fileKey } = await savePrivateMediaKit(buffer, file.name || "file");
+  const { fileKey } = await savePrivateMediaKit(buffer, file.name || "file", file.type);
 
   const record = await prisma.mediaKitFile.create({
     data: {
