@@ -45,6 +45,8 @@ function r2(): S3Client {
     _client = new S3Client({
       region: "auto",
       endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+      // R2 は path-style での addressing が確実（仮想ホスト形式での不整合を避ける）
+      forcePathStyle: true,
       credentials: {
         accessKeyId: R2_ACCESS_KEY_ID as string,
         secretAccessKey: R2_SECRET_ACCESS_KEY as string,

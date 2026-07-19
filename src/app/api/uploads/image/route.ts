@@ -45,10 +45,17 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid_image" }, { status: 400 });
   }
 
-  const { url } = await savePublicImage(
-    buffer,
-    file.name || ALLOWED_TYPES[file.type],
-    file.type
-  );
-  return NextResponse.json({ url, width, height }, { status: 201 });
+  try {
+    const { url } = await savePublicImage(
+      buffer,
+      file.name || ALLOWED_TYPES[file.type],
+      file.type
+    );
+    return NextResponse.json({ url, width, height }, { status: 201 });
+  } catch (e) {
+    // R2 等ストレージ側のエラーを握り潰さずログ＆返却（本番切り分け用）
+    const message = e instanceof Error ? e.message : "storage_error";
+    console.error("savePublicImage failed:", message);
+    return NextResponse.json({ error: "storage_error", detail: message }, { status: 502 });
+  }
 }
