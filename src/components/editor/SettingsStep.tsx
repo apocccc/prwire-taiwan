@@ -133,7 +133,7 @@ export function SettingsStep({
     }
     const b = await res.json();
     setStatus(b.status);
-    setMessage(b.status === "PUBLISHED" ? t("publishedNow") : t("submitted"));
+    setMessage(b.status === "SCHEDULED" ? t("scheduledDone") : t("publishedNow"));
     router.refresh();
   }
 

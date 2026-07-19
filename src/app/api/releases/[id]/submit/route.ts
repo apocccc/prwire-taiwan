@@ -7,9 +7,8 @@ import { truncateDescription } from "@/lib/seo";
 import { tiptapToPlainText } from "@/lib/tiptap-render";
 
 /**
- * 配信申請。
- * 審査フローON: DRAFT → IN_REVIEW（管理者が承認すると公開）
- * 審査フローOFF: 即時公開（scheduledAt 指定時は SCHEDULED）
+ * 配信。レビューは行わない。
+ * scheduledAt 指定時は SCHEDULED（予約公開）、未指定なら即時 PUBLISHED。
  */
 export async function POST(
   request: Request,
@@ -53,25 +52,8 @@ export async function POST(
     release.metaDescriptionEn ||
     (release.bodyEn ? truncateDescription(tiptapToPlainText(release.bodyEn)) : null);
 
-  const settings = await prisma.siteSetting.findUnique({ where: { id: 1 } });
-  const reviewRequired = settings?.reviewRequired ?? true;
-
+  // レビューなし: 即時公開 or 予約
   let updated;
-  if (reviewRequired && session.user.role !== "ADMIN") {
-    updated = await prisma.pressRelease.update({
-      where: { id },
-      data: {
-        status: "IN_REVIEW",
-        scheduledAt,
-        reviewNote: null,
-        metaDescriptionZh,
-        metaDescriptionEn,
-      },
-    });
-    return NextResponse.json({ ok: true, status: updated.status });
-  }
-
-  // 審査不要（または管理者による申請）: 即時公開 or 予約
   if (scheduledAt) {
     updated = await prisma.pressRelease.update({
       where: { id },
@@ -79,6 +61,7 @@ export async function POST(
         status: "SCHEDULED",
         scheduledAt,
         publishedAt: scheduledAt,
+        reviewNote: null,
         metaDescriptionZh,
         metaDescriptionEn,
       },
@@ -91,6 +74,7 @@ export async function POST(
         scheduledAt: null,
         // 再公開時は初回公開日時を維持
         publishedAt: release.publishedAt ?? new Date(),
+        reviewNote: null,
         metaDescriptionZh,
         metaDescriptionEn,
       },
