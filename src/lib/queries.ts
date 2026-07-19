@@ -5,13 +5,17 @@ import type { Locale } from "../../config/site";
 
 export const PER_PAGE = 12;
 
-/** 指定ロケール版が存在する公開済みリリースの where 条件 */
-function publishedWhere(locale: Locale): Prisma.PressReleaseWhereInput {
+/**
+ * 公開済みリリースの where 条件。
+ * 入稿は単一言語（既定は繁体中文）のため、いずれかの言語のタイトルがあれば
+ * 全ロケールの一覧に表示し、表示側は pick() で存在する言語にフォールバックする。
+ */
+function publishedWhere(_locale: Locale): Prisma.PressReleaseWhereInput {
   return {
     // SCHEDULED は公開時刻を過ぎた時点で公開扱い（ISR再生成時に反映）
     status: { in: ["PUBLISHED", "SCHEDULED"] },
     publishedAt: { lte: new Date() },
-    ...(locale === "zh" ? { titleZh: { not: null } } : { titleEn: { not: null } }),
+    OR: [{ titleZh: { not: null } }, { titleEn: { not: null } }],
   };
 }
 

@@ -36,9 +36,9 @@ async function getPublishedRelease(param: string, locale: Locale) {
   ) {
     return null;
   }
-  // 該当ロケール版が無い場合は404（存在する言語のみ hreflang 相互リンク）
-  const title = locale === "zh" ? release.titleZh : release.titleEn;
-  if (!title) return null;
+  // 入稿は単一言語のため、いずれかの言語のタイトルがあれば表示（表示側は pick でフォールバック）
+  void locale;
+  if (!release.titleZh && !release.titleEn) return null;
   return release;
 }
 
@@ -60,7 +60,8 @@ export async function generateMetadata({
   if (!release) return {};
 
   const title = pick(l, release.titleZh, release.titleEn);
-  const body = l === "zh" ? release.bodyZh : release.bodyEn;
+  const body =
+    (l === "zh" ? release.bodyZh : release.bodyEn) ?? release.bodyZh ?? release.bodyEn;
   const description =
     (l === "zh" ? release.metaDescriptionZh : release.metaDescriptionEn) ||
     truncateDescription(tiptapToPlainText(body));
@@ -103,7 +104,8 @@ export default async function ArticlePage({
 
   const title = pick(l, release.titleZh, release.titleEn)!;
   const subtitle = pick(l, release.subtitleZh, release.subtitleEn);
-  const body = l === "zh" ? release.bodyZh : release.bodyEn;
+  const body =
+    (l === "zh" ? release.bodyZh : release.bodyEn) ?? release.bodyZh ?? release.bodyEn;
   const companyName = pick(l, release.company.nameZh, release.company.nameEn);
   const description =
     (l === "zh" ? release.metaDescriptionZh : release.metaDescriptionEn) ||
