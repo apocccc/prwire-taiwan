@@ -95,8 +95,14 @@ function RenderNode({ node }: { node: TiptapNode }): ReactNode {
       if (!src) return null;
       const width = Number(node.attrs?.width) || 1200;
       const height = Number(node.attrs?.height) || 675;
+      const align = ["left", "center", "right"].includes(node.attrs?.align)
+        ? node.attrs?.align
+        : "center";
+      const size = ["small", "medium", "large"].includes(node.attrs?.size)
+        ? node.attrs?.size
+        : "medium";
       return (
-        <figure>
+        <figure data-align={align} data-size={size}>
           {/* CLS防止のため width/height 必須、本文画像は遅延読み込み */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={src} alt={caption} width={width} height={height} loading="lazy" decoding="async" />
