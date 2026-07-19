@@ -96,6 +96,8 @@ export async function savePublicImage(
         Key: `${PUBLIC_PREFIX}${name}`,
         Body: buffer,
         ContentType: contentType,
+        // 公開画像は直リンクでもブラウザ内で表示させる（ダウンロードにしない）
+        ContentDisposition: "inline",
         CacheControl: "public, max-age=31536000, immutable",
       })
     );
