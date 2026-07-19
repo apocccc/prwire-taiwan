@@ -43,16 +43,17 @@ export async function PUT(
   }
   const data = parsed.data;
 
-  // 本文画像バリデーション（保存レベルでブロック）
-  const images = extractAllBodyImages({
-    bodyZh: data.bodyZh ?? null,
-    bodyEn: data.bodyEn ?? null,
-  });
-  if (images.length > 10) {
-    return NextResponse.json({ error: "errTooManyImages" }, { status: 400 });
-  }
-  if (images.some((img) => !img.caption.trim())) {
-    return NextResponse.json({ error: "errImageCaptions" }, { status: 400 });
+  // 本文が送られた時のみ画像バリデーション＋同期（2ステップ保存で片方のみ送るため）
+  const bodyProvided = data.bodyZh !== undefined;
+  let images: { src: string; caption: string }[] = [];
+  if (bodyProvided) {
+    images = extractAllBodyImages({ bodyZh: data.bodyZh ?? null });
+    if (images.length > 10) {
+      return NextResponse.json({ error: "errTooManyImages" }, { status: 400 });
+    }
+    if (images.some((img) => !img.caption.trim())) {
+      return NextResponse.json({ error: "errImageCaptions" }, { status: 400 });
+    }
   }
 
   // slug: 公開前のみ変更可（公開後はURL固定）
@@ -65,18 +66,42 @@ export async function PUT(
     slug = buildReleaseSlug(extractShortId(release.slug), data.customSlug);
   }
 
+  // 送られたフィールドのみ更新（部分更新）
+  const updateData: Prisma.PressReleaseUpdateInput = { slug };
+  if (data.titleZh !== undefined) updateData.titleZh = data.titleZh || null;
+  if (data.subtitleZh !== undefined) updateData.subtitleZh = data.subtitleZh || null;
+  if (bodyProvided)
+    updateData.bodyZh = (data.bodyZh ?? Prisma.DbNull) as Prisma.InputJsonValue;
+  if (data.metaDescriptionZh !== undefined)
+    updateData.metaDescriptionZh = data.metaDescriptionZh || null;
+  if (data.purpose !== undefined) updateData.purpose = data.purpose ?? null;
+  if (data.thumbnailUrl !== undefined)
+    updateData.thumbnailUrl = data.thumbnailUrl || null;
+  if (data.thumbnailCaption !== undefined)
+    updateData.thumbnailCaption = data.thumbnailCaption || null;
+  if (data.pressContactDept !== undefined)
+    updateData.pressContactDept = data.pressContactDept || null;
+  if (data.pressContactName !== undefined)
+    updateData.pressContactName = data.pressContactName || null;
+  if (data.pressContactEmail !== undefined)
+    updateData.pressContactEmail = data.pressContactEmail || null;
+  if (data.pressContactPhone !== undefined)
+    updateData.pressContactPhone = data.pressContactPhone || null;
+
   const updated = await prisma.$transaction(async (tx) => {
-    // 本文画像をReleaseImageへ同期
-    await tx.releaseImage.deleteMany({ where: { releaseId: id } });
-    if (images.length > 0) {
-      await tx.releaseImage.createMany({
-        data: images.map((img, i) => ({
-          releaseId: id,
-          url: img.src,
-          caption: img.caption,
-          sortOrder: i,
-        })),
-      });
+    // 本文画像をReleaseImageへ同期（本文が送られた時のみ）
+    if (bodyProvided) {
+      await tx.releaseImage.deleteMany({ where: { releaseId: id } });
+      if (images.length > 0) {
+        await tx.releaseImage.createMany({
+          data: images.map((img, i) => ({
+            releaseId: id,
+            url: img.src,
+            caption: img.caption,
+            sortOrder: i,
+          })),
+        });
+      }
     }
 
     // カテゴリ同期
@@ -103,22 +128,7 @@ export async function PUT(
       }
     }
 
-    return tx.pressRelease.update({
-      where: { id },
-      data: {
-        slug,
-        titleZh: data.titleZh ?? null,
-        subtitleZh: data.subtitleZh ?? null,
-        bodyZh: (data.bodyZh ?? Prisma.DbNull) as Prisma.InputJsonValue,
-        titleEn: data.titleEn ?? null,
-        subtitleEn: data.subtitleEn ?? null,
-        bodyEn: (data.bodyEn ?? Prisma.DbNull) as Prisma.InputJsonValue,
-        metaDescriptionZh: data.metaDescriptionZh ?? null,
-        metaDescriptionEn: data.metaDescriptionEn ?? null,
-        thumbnailUrl: data.thumbnailUrl ?? null,
-        thumbnailCaption: data.thumbnailCaption ?? null,
-      },
-    });
+    return tx.pressRelease.update({ where: { id }, data: updateData });
   });
 
   // 公開中リリースの編集は即時反映

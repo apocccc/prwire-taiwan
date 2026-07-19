@@ -108,6 +108,9 @@ model PressRelease {
   metaDescriptionZh String?
   metaDescriptionEn String?
 
+  // 配信目的（商品・サービス / イベント 等。src/lib/purposes.ts のキー）
+  purpose String?
+
   // サムネイル（必須・キャプション必須はアプリ側バリデーションで担保）
   thumbnailUrl     String?
   thumbnailCaption String?
