@@ -29,7 +29,8 @@
     "privacy": "Privacy Policy",
     "freeDistribute": "Free Distribution",
     "companyLogin": "Company Login",
-    "mediaLogin": "Media Login"
+    "mediaLogin": "Media Login",
+    "menu": "Menu"
   },
   "auth": {
     "loginTitle": "Log in",

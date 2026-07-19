@@ -6,6 +6,8 @@ import { routing } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
 import { HeaderAuthNav } from "@/components/HeaderAuthNav";
+import { MobileNav } from "@/components/MobileNav";
+import { MobileHeaderActions } from "@/components/MobileHeaderActions";
 import { getSiteSettings } from "@/lib/site-settings";
 import { siteConfig, type Locale } from "../../../config/site";
 import "../globals.css";
@@ -55,20 +57,46 @@ export default async function LocaleLayout({
       <body className="antialiased min-h-screen flex flex-col bg-white text-gray-900">
         <NextIntlClientProvider>
           <header className="border-b border-gray-200">
-            <div className="mx-auto max-w-6xl px-4 py-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
-              <Link href="/" className="shrink-0" aria-label={settings.name[l]}>
-                <Image
-                  src="/logo.png"
-                  alt={settings.name[l]}
-                  width={1500}
-                  height={300}
-                  priority
-                  className="h-9 w-auto sm:h-10"
-                />
-              </Link>
+            <div className="mx-auto flex max-w-6xl items-center justify-between gap-x-4 gap-y-3 px-4 py-3">
+              {/* 左: モバイルはハンバーガー + ロゴ */}
+              <div className="flex min-w-0 items-center gap-1.5">
+                <div className="sm:hidden">
+                  <MobileNav
+                    locale={locale}
+                    labels={{
+                      home: t("home"),
+                      news: t("news"),
+                      mediaList: t("mediaList"),
+                      categories: t("categories"),
+                      terms: t("terms"),
+                      privacy: t("privacy"),
+                      freeDistribute: t("freeDistribute"),
+                      companyLogin: t("companyLogin"),
+                      mediaLogin: t("mediaLogin"),
+                      dashboard: t("dashboard"),
+                      mediaRoom: t("mediaRoom"),
+                      logout: tCommon("logout"),
+                      menu: t("menu"),
+                      close: tCommon("cancel"),
+                    }}
+                  />
+                </div>
+                <Link href="/" className="min-w-0 shrink" aria-label={settings.name[l]}>
+                  <Image
+                    src="/logo.png"
+                    alt={settings.name[l]}
+                    width={1500}
+                    height={300}
+                    priority
+                    className="h-8 w-auto max-w-full sm:h-10"
+                  />
+                </Link>
+              </div>
+
+              {/* デスクトップ: 従来のナビ */}
               <nav
                 aria-label="Global"
-                className="flex flex-wrap items-center justify-end gap-2 sm:gap-3"
+                className="hidden items-center justify-end gap-2 sm:flex sm:gap-3"
               >
                 <HeaderAuthNav
                   locale={locale}
@@ -83,6 +111,14 @@ export default async function LocaleLayout({
                 />
                 <LocaleSwitcher />
               </nav>
+
+              {/* モバイル: 検索 + 無料発布CTA */}
+              <div className="sm:hidden">
+                <MobileHeaderActions
+                  registerLabel={t("freeDistribute")}
+                  searchLabel={tCommon("search")}
+                />
+              </div>
             </div>
           </header>
           <main className="flex-1">{children}</main>

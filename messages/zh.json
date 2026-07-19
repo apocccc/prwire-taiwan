@@ -29,7 +29,8 @@
     "privacy": "隱私權政策",
     "freeDistribute": "免費發布新聞稿",
     "companyLogin": "企業登入",
-    "mediaLogin": "媒體登入"
+    "mediaLogin": "媒體登入",
+    "menu": "選單"
   },
   "auth": {
     "loginTitle": "登入",
