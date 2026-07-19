@@ -334,7 +334,7 @@ export function ReleaseEditor({
         <h2 className="font-semibold">{t("thumbnail")}</h2>
         <div className="mt-3 flex flex-wrap items-start gap-4">
           {form.thumbnailUrl ? (
-            <img src={form.thumbnailUrl} alt="" className="h-32 w-56 rounded object-cover" />
+            <img src={form.thumbnailUrl} alt="" className="h-32 w-56 rounded bg-gray-100 object-contain" />
           ) : (
             <div className="flex h-32 w-56 items-center justify-center rounded bg-gray-100 text-sm text-gray-400">
               16:9

@@ -68,7 +68,7 @@ export default async function ReleasePreviewPage({
                 alt={release.thumbnailCaption ?? title}
                 fill
                 sizes="768px"
-                className="object-cover"
+                className="object-contain"
                 priority
               />
             </div>

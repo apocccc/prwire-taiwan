@@ -49,7 +49,7 @@ function FeedRow({ item, locale }: { item: FeedItem; locale: Locale }) {
               alt={item.thumbnailCaption ?? title}
               fill
               sizes="144px"
-              className="object-cover"
+              className="object-contain"
             />
           </div>
         )}

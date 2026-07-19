@@ -172,7 +172,7 @@ export default async function ArticlePage({
                 alt={release.thumbnailCaption ?? title}
                 fill
                 sizes="(max-width: 768px) 100vw, 768px"
-                className="object-cover"
+                className="object-contain"
                 priority
               />
             </div>

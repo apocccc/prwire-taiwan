@@ -31,7 +31,7 @@ export function RankingCard({
               alt={release.thumbnailCaption ?? title}
               fill
               sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 16vw"
-              className="object-cover"
+              className="object-contain"
               priority={priority}
             />
           ) : (
