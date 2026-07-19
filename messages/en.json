@@ -46,7 +46,9 @@
     "outletName": "Outlet name",
     "outletUrl": "Outlet URL",
     "contactName": "Contact person",
+    "contactTitle": "Job title (optional)",
     "contactEmail": "Contact email (kept private)",
+    "contactPhone": "Contact phone (optional)",
     "coverageArea": "Coverage area",
     "contactPersonNote": "Contact details are used only by the platform and administrators. They are never published.",
     "consentTitle": "Terms of Service Consent",
@@ -138,6 +140,19 @@
     "companyProfile": "About the Company",
     "moreFromCompany": "More from this company",
     "notFound": "Press release not found"
+  },
+  "mediaDetail": {
+    "viewDetail": "View media details",
+    "title": "Media details",
+    "outletName": "Outlet",
+    "contactName": "Contact name",
+    "contactTitle": "Job title",
+    "contactEmail": "Email",
+    "contactPhone": "Phone",
+    "outletUrl": "Outlet URL",
+    "copy": "Copy",
+    "copied": "Copied",
+    "close": "Close"
   },
   "disclosure": {
     "title": "Media-only information",

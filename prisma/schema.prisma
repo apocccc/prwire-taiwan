@@ -85,7 +85,9 @@ model MediaOutlet {
   outletName   String // 媒体名（公開）
   outletUrl    String // 媒体URL（公開）
   contactName  String // 担当者名（非公開）
+  contactTitle String? // 担当者の役職（非公開・開示時に事業者へ提供）
   contactEmail String // 連絡先メール（非公開）
+  contactPhone String? // 担当者の電話番号（非公開・開示時に事業者へ提供）
   coverageArea String // カバー領域（公開）
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

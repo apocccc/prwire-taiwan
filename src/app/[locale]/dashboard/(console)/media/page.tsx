@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { requireRole } from "@/lib/require-role";
 import { formatTaipei } from "@/lib/dates";
+import { MediaOutletDetailButton } from "@/components/dashboard/MediaOutletDetailButton";
 import type { Locale } from "../../../../../../config/site";
 
 export const dynamic = "force-dynamic";
@@ -41,7 +42,15 @@ export default async function MediaActivityPage({
           createdAt: true,
           release: { select: { titleZh: true, titleEn: true } },
           mediaOutlet: {
-            select: { outletName: true, outletUrl: true, coverageArea: true },
+            select: {
+              outletName: true,
+              outletUrl: true,
+              coverageArea: true,
+              contactName: true,
+              contactTitle: true,
+              contactEmail: true,
+              contactPhone: true,
+            },
           },
         },
       })
@@ -71,17 +80,22 @@ export default async function MediaActivityPage({
                     {formatTaipei(r.createdAt, l)}
                   </td>
                   <td className="py-3 pr-4">
-                    <a
-                      href={r.mediaOutlet.outletUrl}
-                      target="_blank"
-                      rel="noopener nofollow"
-                      className="font-medium text-blue-700 hover:underline"
-                    >
-                      {r.mediaOutlet.outletName}
-                    </a>
-                    <span className="mt-0.5 block text-xs text-gray-500">
-                      {r.mediaOutlet.coverageArea}
-                    </span>
+                    <div className="flex items-start gap-3">
+                      <div className="min-w-0">
+                        <a
+                          href={r.mediaOutlet.outletUrl}
+                          target="_blank"
+                          rel="noopener nofollow"
+                          className="font-medium text-blue-700 hover:underline"
+                        >
+                          {r.mediaOutlet.outletName}
+                        </a>
+                        <span className="mt-0.5 block text-xs text-gray-500">
+                          {r.mediaOutlet.coverageArea}
+                        </span>
+                      </div>
+                      <MediaOutletDetailButton outlet={r.mediaOutlet} />
+                    </div>
                   </td>
                   <td className="max-w-xs py-3">
                     <span className="line-clamp-2">

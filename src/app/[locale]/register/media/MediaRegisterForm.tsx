@@ -29,7 +29,9 @@ export function MediaRegisterForm() {
         outletName: form.get("outletName"),
         outletUrl: form.get("outletUrl"),
         contactName: form.get("contactName"),
+        contactTitle: form.get("contactTitle"),
         contactEmail: form.get("contactEmail"),
+        contactPhone: form.get("contactPhone"),
         coverageArea: form.get("coverageArea"),
         consentTerms: form.get("consentTerms") === "on",
         consentPrivacy: form.get("consentPrivacy") === "on",
@@ -91,12 +93,26 @@ export function MediaRegisterForm() {
           className="mt-1 w-full rounded border border-gray-300 px-3 py-2" />
       </div>
       <div>
+        <label htmlFor="contactTitle" className="block text-sm font-medium">
+          {t("contactTitle")}
+        </label>
+        <input id="contactTitle" name="contactTitle" type="text"
+          className="mt-1 w-full rounded border border-gray-300 px-3 py-2" />
+      </div>
+      <div>
         <label htmlFor="contactEmail" className="block text-sm font-medium">
           {t("contactEmail")}
         </label>
         <input id="contactEmail" name="contactEmail" type="email" required
           className="mt-1 w-full rounded border border-gray-300 px-3 py-2" />
         <p className="mt-1 text-xs text-gray-500">{t("contactPersonNote")}</p>
+      </div>
+      <div>
+        <label htmlFor="contactPhone" className="block text-sm font-medium">
+          {t("contactPhone")}
+        </label>
+        <input id="contactPhone" name="contactPhone" type="tel"
+          className="mt-1 w-full rounded border border-gray-300 px-3 py-2" />
       </div>
       <div>
         <label htmlFor="coverageArea" className="block text-sm font-medium">

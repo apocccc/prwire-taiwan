@@ -35,7 +35,9 @@ export const mediaRegisterSchema = credentialsSchema
     outletName: z.string().min(1).max(200),
     outletUrl: z.string().url().max(500),
     contactName: z.string().min(1).max(100),
+    contactTitle: z.string().max(100).optional().or(z.literal("")),
     contactEmail: z.string().email().max(320),
+    contactPhone: z.string().max(50).optional().or(z.literal("")),
     coverageArea: z.string().min(1).max(500),
   });
 

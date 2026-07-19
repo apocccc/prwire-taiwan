@@ -46,7 +46,9 @@
     "outletName": "媒體名稱",
     "outletUrl": "媒體網址",
     "contactName": "聯絡人姓名",
+    "contactTitle": "職稱（選填）",
     "contactEmail": "聯絡信箱（不公開）",
+    "contactPhone": "聯絡電話（選填）",
     "coverageArea": "報導領域",
     "contactPersonNote": "聯絡資訊僅供本平台與管理員使用，不會對外公開。",
     "consentTitle": "服務條款同意事項",
@@ -138,6 +140,19 @@
     "companyProfile": "企業資訊",
     "moreFromCompany": "此企業的其他新聞稿",
     "notFound": "找不到此新聞稿"
+  },
+  "mediaDetail": {
+    "viewDetail": "查看媒體詳情",
+    "title": "媒體詳細資訊",
+    "outletName": "媒體名稱",
+    "contactName": "擔當者姓名",
+    "contactTitle": "職稱",
+    "contactEmail": "電子郵件",
+    "contactPhone": "電話",
+    "outletUrl": "媒體網址",
+    "copy": "複製",
+    "copied": "已複製",
+    "close": "關閉"
   },
   "disclosure": {
     "title": "媒體關係者限定資訊",
