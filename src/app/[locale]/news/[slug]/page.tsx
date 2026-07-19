@@ -5,6 +5,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CompanyInfoBlock } from "@/components/CompanyInfoBlock";
+import { DisclosurePanel } from "@/components/DisclosurePanel";
 import { ViewBeacon } from "@/components/ViewBeacon";
 import { JsonLd, newsArticleJsonLd } from "@/lib/jsonld";
 import { buildMetadata, truncateDescription } from "@/lib/seo";
@@ -101,6 +102,15 @@ export default async function ArticlePage({
   const t = await getTranslations("article");
   const tNav = await getTranslations("nav");
   const tNews = await getTranslations("news");
+  const tDisc = await getTranslations("disclosure");
+
+  const hasPressContact = Boolean(
+    release.pressContactDept ||
+      release.pressContactName ||
+      release.pressContactEmail ||
+      release.pressContactPhone
+  );
+  const hasMediaOnlyInfo = Boolean(release.mediaOnlyInfo);
 
   const title = pick(l, release.titleZh, release.titleEn)!;
   const subtitle = pick(l, release.subtitleZh, release.subtitleEn);
@@ -228,6 +238,31 @@ export default async function ArticlePage({
           )}
           <CompanyInfoBlock company={release.company} />
         </aside>
+
+        {(hasPressContact || hasMediaOnlyInfo) && (
+          <DisclosurePanel
+            releaseId={release.id}
+            hasPressContact={hasPressContact}
+            hasMediaOnlyInfo={hasMediaOnlyInfo}
+            loginHref={`/${l}/login`}
+            labels={{
+              title: tDisc("title"),
+              note: tDisc("note"),
+              contactHeading: tDisc("contactHeading"),
+              mediaInfoHeading: tDisc("mediaInfoHeading"),
+              disclose: tDisc("disclose"),
+              revealing: tDisc("revealing"),
+              mediaOnlyPrompt: tDisc("mediaOnlyPrompt"),
+              loginCta: tDisc("loginCta"),
+              recorded: tDisc("recorded"),
+              failed: tDisc("failed"),
+              dept: tDisc("dept"),
+              name: tDisc("name"),
+              email: tDisc("email"),
+              phone: tDisc("phone"),
+            }}
+          />
+        )}
       </article>
       <ViewBeacon releaseId={release.id} />
     </div>

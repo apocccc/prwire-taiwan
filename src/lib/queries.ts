@@ -88,6 +88,7 @@ export async function getReleaseBySlug(slug: string) {
       company: true,
       images: { orderBy: { sortOrder: "asc" } },
       categories: { include: { category: true } },
+      mediaOnlyInfo: { select: { releaseId: true } },
     },
   });
 }
@@ -100,6 +101,7 @@ export async function getReleaseBySeqs(releaseSeq: number, companySeq: number) {
       company: true,
       images: { orderBy: { sortOrder: "asc" } },
       categories: { include: { category: true } },
+      mediaOnlyInfo: { select: { releaseId: true } },
     },
   });
   // 会社seqが一致しない場合は不正なURLとして扱う

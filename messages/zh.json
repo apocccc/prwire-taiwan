@@ -139,6 +139,22 @@
     "moreFromCompany": "此企業的其他新聞稿",
     "notFound": "找不到此新聞稿"
   },
+  "disclosure": {
+    "title": "媒體關係者限定資訊",
+    "note": "以下資訊僅供媒體參考，於文章中以馬賽克顯示。登入媒體帳號並按下「開示」後即可閱覽，且會通知發布者是哪家媒體提出請求。",
+    "contactHeading": "採訪聯絡窗口（撰稿企業窗口）",
+    "mediaInfoHeading": "本則新聞稿的媒體專用補充資訊",
+    "disclose": "開示",
+    "revealing": "開示中…",
+    "mediaOnlyPrompt": "此資訊僅開放給已登入的媒體帳號。",
+    "loginCta": "以媒體帳號登入",
+    "recorded": "已記錄您的開示請求，發布者可於管理後台確認。",
+    "failed": "開示失敗，請稍後再試。",
+    "dept": "部門",
+    "name": "姓名",
+    "email": "電子郵件",
+    "phone": "電話"
+  },
   "category": {
     "indexTitle": "分類一覽",
     "listTitle": "{name} 的新聞稿"
