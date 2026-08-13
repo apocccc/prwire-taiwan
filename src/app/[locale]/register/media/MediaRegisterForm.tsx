@@ -11,11 +11,13 @@ export function MediaRegisterForm() {
   const locale = useLocale();
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const [fieldMsgs, setFieldMsgs] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
+    setFieldMsgs([]);
     setLoading(true);
 
     const form = new FormData(e.currentTarget);
@@ -46,8 +48,14 @@ export function MediaRegisterForm() {
     }
     const body = await res.json().catch(() => null);
     if (body?.error === "email_taken") setError(t("emailTaken"));
-    else if (body?.error === "validation_failed") setError(t("registerInvalidInput"));
-    else setError(t("registerFailed"));
+    else if (body?.error === "validation_failed") {
+      const fe = (body?.details?.fieldErrors ?? {}) as Record<string, string[]>;
+      const msgs = Object.keys(fe)
+        .filter((k) => t.has(`fieldErrors.${k}` as never))
+        .map((k) => t(`fieldErrors.${k}` as never));
+      if (msgs.length) setFieldMsgs(msgs);
+      else setError(t("registerInvalidInput"));
+    } else setError(t("registerFailed"));
   }
 
   return (
@@ -56,6 +64,16 @@ export function MediaRegisterForm() {
         <p role="alert" className="rounded bg-red-50 px-3 py-2 text-sm text-red-700">
           {error}
         </p>
+      )}
+      {fieldMsgs.length > 0 && (
+        <div role="alert" className="rounded bg-red-50 px-3 py-2 text-sm text-red-700">
+          <p className="font-medium">{t("registerInvalidInput")}</p>
+          <ul className="mt-1 list-disc space-y-0.5 pl-5">
+            {fieldMsgs.map((m, i) => (
+              <li key={i}>{m}</li>
+            ))}
+          </ul>
+        </div>
       )}
       <div>
         <label htmlFor="email" className="block text-sm font-medium">
