@@ -43,6 +43,8 @@
     "companyNameZh": "公司名稱（繁體中文）",
     "companyNameEn": "公司名稱（英文，選填）",
     "companySlug": "公司網址代稱（英數字與連字號）",
+    "slugHint": "僅限半形英文小寫、數字、連字號（例：taiwan-news）。請勿輸入網址。",
+    "registerInvalidInput": "輸入內容有誤，請確認各欄位（尤其「網址代稱」僅能使用半形英數字與連字號，勿輸入網址）。",
     "websiteUrl": "公司網站",
     "outletName": "媒體名稱",
     "outletUrl": "媒體網址",

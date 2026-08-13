@@ -44,6 +44,7 @@ export function PublisherRegisterForm() {
     const body = await res.json().catch(() => null);
     if (body?.error === "email_taken") setError(t("emailTaken"));
     else if (body?.error === "slug_taken") setError(t("slugTaken"));
+    else if (body?.error === "validation_failed") setError(t("registerInvalidInput"));
     else setError(t("registerFailed"));
   }
 
@@ -89,7 +90,9 @@ export function PublisherRegisterForm() {
         </label>
         <input id="companySlug" name="companySlug" type="text" required
           pattern="[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" minLength={2} maxLength={50}
+          placeholder="taiwan-news"
           className="mt-1 w-full rounded border border-gray-300 px-3 py-2" />
+        <p className="mt-1 text-xs text-gray-500">{t("slugHint")}</p>
       </div>
       <div>
         <label htmlFor="websiteUrl" className="block text-sm font-medium">

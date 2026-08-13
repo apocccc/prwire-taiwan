@@ -43,6 +43,8 @@
     "companyNameZh": "Company name (Traditional Chinese)",
     "companyNameEn": "Company name (English, optional)",
     "companySlug": "Company URL slug (letters, numbers, hyphens)",
+    "slugHint": "Lowercase letters, numbers and hyphens only (e.g. taiwan-news). Do not enter a URL.",
+    "registerInvalidInput": "Some fields are invalid. Please check them — the URL slug must be lowercase letters, numbers and hyphens only (not a URL).",
     "websiteUrl": "Company website",
     "outletName": "Outlet name",
     "outletUrl": "Outlet URL",

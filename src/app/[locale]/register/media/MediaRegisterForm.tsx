@@ -46,6 +46,7 @@ export function MediaRegisterForm() {
     }
     const body = await res.json().catch(() => null);
     if (body?.error === "email_taken") setError(t("emailTaken"));
+    else if (body?.error === "validation_failed") setError(t("registerInvalidInput"));
     else setError(t("registerFailed"));
   }
 
